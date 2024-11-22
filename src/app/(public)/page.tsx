@@ -2,7 +2,7 @@
 export default function Home() {
   return (
     <div>
-      Arra pexte
+      RAIZ
     </div>
   );
 }
