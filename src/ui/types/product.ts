@@ -1,5 +1,6 @@
 export interface Product {
-    id:string,
+    id:number,
+    available: boolean,
     name:string,
     price:number,
     description: string,

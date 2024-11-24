@@ -6,6 +6,6 @@ export interface Vendor{
     name: string,
     description: string,
     hub: Hub['id'],
-    products: Product[],
+    products: number[],
     totalProducts: number,
 }

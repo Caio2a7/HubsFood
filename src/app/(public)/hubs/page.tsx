@@ -1,6 +1,6 @@
 // src/app/(public)/hubs/page.tsx
 import { Hub } from "@/ui/types/hub";
-import { getHubs } from "@/ui/utils/hubsFetcher";
+import { getHubs } from "@/services/hubs/hubGET";
 import Link from "next/link";
 
 // Gerando os parâmetros estáticos (SSG) com os IDs dos hubs

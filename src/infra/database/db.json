@@ -1,0 +1,202 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "client1",
+      "password": "$2a$10$zY3v1W3xH9PTzIMNYd0KLOL.G28chANSzXbt/nq2KPcXUczFHSU4W",
+      "role": "client",
+      "email": "client1@example.com"
+    },
+    {
+      "id": "2",
+      "username": "vendor1",
+      "password": "$2a$10$b4epCtPs0zdVogzmqxK.X.SGboi7dzKA7qdHxie4hCdDaR56GaxRK",
+      "role": "vendor",
+      "email": "vendor1@example.com",
+      "hubId": 1
+    },
+    {
+      "id": "3",
+      "username": "admin",
+      "password": "$2a$10$QS3NHNSLHE76HzmTwAOc3OHyepFIdoSNeENfPPGw44zO/NKTJelDq",
+      "role": "admin",
+      "email": "admin@example.com"
+    },
+    {
+      "id": "4d40",
+      "email": "teste@gmail.com",
+      "password": "$2a$10$CoEVlUUAS.0pAGqzK.aQLeohuwDnswb.GbQ9N9cq.ru2xRPVr..se",
+      "role": "user"
+    },
+    {
+      "id": 4,
+      "email": "suportealmoxarifado@nei.ufrn.br",
+      "password": "$2a$10$/p34lKGIQLI..JnrdUSvJ.3BkWFUuzWR5P0QoZCiAwHEaEC2EfmxO",
+      "role": "user"
+    }
+  ],
+  "hubs": [
+    {
+      "id": "1",
+      "name": "Downtown Food Hub",
+      "location": {
+        "street": "123 Main St",
+        "number": 100,
+        "city": "Downtown",
+        "state": "NY",
+        "cep": "10001"
+      },
+      "vendors": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Uptown Food Hub",
+      "location": {
+        "street": "456 Broadway",
+        "number": 200,
+        "city": "Uptown",
+        "state": "NY",
+        "cep": "10002"
+      },
+      "vendors": [
+        3,
+        4
+      ]
+    }
+  ],
+  "vendors": [
+    {
+      "id": "1",
+      "name": "Pizza Place",
+      "description": "Best pizzas in town",
+      "hubId": 1,
+      "products": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Sushi World",
+      "description": "Fresh sushi rolls",
+      "hubId": 1,
+      "products": [
+        3,
+        4
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Burger Joint",
+      "description": "Juicy burgers",
+      "hubId": 2,
+      "products": [
+        5,
+        6
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Taco Corner",
+      "description": "Authentic tacos",
+      "hubId": 2,
+      "products": [
+        7,
+        8
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Margherita Pizza",
+      "description": "Classic margherita with fresh basil",
+      "price": 12.99,
+      "vendorId": 1
+    },
+    {
+      "id": "2",
+      "name": "Pepperoni Pizza",
+      "description": "Loaded with pepperoni slices",
+      "price": 14.99,
+      "vendorId": 1
+    },
+    {
+      "id": "4",
+      "name": "Spicy Tuna Roll",
+      "description": "Fresh tuna with a kick",
+      "price": 9.99,
+      "vendorId": 2
+    },
+    {
+      "id": "5",
+      "name": "Cheeseburger",
+      "description": "Classic cheeseburger with cheddar",
+      "price": 10.99,
+      "vendorId": 3
+    },
+    {
+      "id": "6",
+      "name": "Bacon Burger",
+      "description": "Topped with crispy bacon",
+      "price": 12.99,
+      "vendorId": 3
+    },
+    {
+      "id": "7",
+      "name": "Chicken Taco",
+      "description": "Grilled chicken with fresh toppings",
+      "price": 3.99,
+      "vendorId": 4
+    },
+    {
+      "id": "8",
+      "name": "Beef Taco",
+      "description": "Seasoned beef with salsa",
+      "price": 4.99,
+      "vendorId": 4
+    },
+    {
+      "id": "227f",
+      "name": "Teste",
+      "description": "ASSSSSSSS",
+      "price": 12,
+      "vendorId": 2,
+      "category": "dd",
+      "available": true
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "clientId": 1,
+      "productId": 1,
+      "status": "pending",
+      "createdAt": "2024-11-24T00:00:00Z"
+    },
+    {
+      "id": "a465",
+      "clientId": 1,
+      "productId": 1,
+      "status": "pending",
+      "createdAt": "2024-11-24T19:00:38.068Z"
+    },
+    {
+      "id": 2,
+      "clientId": 1,
+      "productId": 3,
+      "status": "pending",
+      "createdAt": "2024-11-24T19:01:35.006Z"
+    },
+    {
+      "id": 3,
+      "clientId": null,
+      "productId": 1,
+      "status": "pending",
+      "createdAt": "2024-11-24T19:18:15.089Z"
+    }
+  ]
+}
