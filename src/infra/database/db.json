@@ -29,7 +29,7 @@
       "role": "user"
     },
     {
-      "id": 4,
+      "id": "4",
       "email": "suportealmoxarifado@nei.ufrn.br",
       "password": "$2a$10$/p34lKGIQLI..JnrdUSvJ.3BkWFUuzWR5P0QoZCiAwHEaEC2EfmxO",
       "role": "user"
@@ -171,32 +171,39 @@
   ],
   "orders": [
     {
-      "id": 1,
+      "id": "1",
       "clientId": 1,
       "productId": 1,
-      "status": "pending",
+      "status": "ready",
       "createdAt": "2024-11-24T00:00:00Z"
     },
     {
       "id": "a465",
       "clientId": 1,
       "productId": 1,
-      "status": "pending",
+      "status": "accepted",
       "createdAt": "2024-11-24T19:00:38.068Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "clientId": 1,
       "productId": 3,
       "status": "pending",
       "createdAt": "2024-11-24T19:01:35.006Z"
     },
     {
-      "id": 3,
+      "id": "3",
       "clientId": null,
       "productId": 1,
       "status": "pending",
       "createdAt": "2024-11-24T19:18:15.089Z"
+    },
+    {
+      "id": "0112",
+      "clientId": 1,
+      "productId": 3,
+      "status": "pending",
+      "createdAt": "2024-11-24T19:01:35.006Z"
     }
   ]
 }
