@@ -1,0 +1,131 @@
+.paymentContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    margin: 0, auto;
+}
+
+
+.payment-box {
+    background-color: white;
+    padding: 30px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px #f7a791;
+    width: 500px;
+}
+
+.payment-box h1 {
+    margin-bottom: 20px;
+    color:#FF3700;
+    font-size: 20px;
+}
+
+
+.total-section{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color:black;
+    font-size: 15px;
+    font-weight: 600;
+    width: 100%;
+    padding: 10px 20px 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 1px solid #9D9191;
+    border-radius: 4px;
+    background-color: #e0e0e0;
+}
+
+.payment-method p {
+    margin-bottom: 20px;
+    color:#FF3700;
+    font-size: 20px;
+    font-weight: 600;
+
+}
+
+.payment-method label {
+    display: block;
+    margin: 20px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color:#9D9191;
+}
+
+.payment-method input[type="radio"] {
+    margin-right: 10px;
+}
+
+#pagar{
+    width: 100%;
+    padding: 10px 0px;
+    font-size: 18px;
+}
+
+/* Pagamento PIX */
+
+.pagamentoPixContainer{
+    width: 0, auto;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.pagamentoPixContainer img{
+    height: 120px;
+}
+
+.pagamentoPixContainer h3, .pagamentoPixContainer span{
+    color: #FF3700;
+    font-size: 15px;
+}
+
+.pagamentoPixContainer h2{
+    font-size: 22px;
+    color: #9D9191;
+}
+
+
+/* Pagamento Cartão de crédito */
+
+.dropdown-section {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.dropdown-section label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color:#FF3700;
+}
+
+#cardDropdown {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    border: 1px solid #9D9191;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    color:#9D9191;
+}
+
+
+
+.hidden {
+    display: none;
+}
+
+#confirmationMessage {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #4caf50;
+    font-weight: bold;
+}

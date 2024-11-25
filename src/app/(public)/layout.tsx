@@ -11,7 +11,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body>
+      <body style={{margin: '0px;', padding: '0px;'}}>
         {children}
       </body>
     </html>

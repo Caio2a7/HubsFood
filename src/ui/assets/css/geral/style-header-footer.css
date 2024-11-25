@@ -1,0 +1,246 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+    list-style: none;
+}
+
+body {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0px 10px;
+}
+
+.header, .footer {
+    background-color: #FFDED5;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.container img, .user img {
+    height: 40px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    height: 100h;
+}
+
+.header ul {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    height: 100h;
+    gap: 5px;
+}
+
+.header a {
+    color: #FF7A55;
+    text-decoration: none;
+    font-size: 15px;
+    padding: 5px 5px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.header a:hover {
+    background-color: #FF7A55;
+    color: #FFDED5;
+    border-radius: 5px;
+}
+
+.user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-end;
+    height: 100h;
+    gap: 0px;
+}
+
+.user span {
+    color: #FF7A55;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: justify;
+}
+
+.loginIcons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.loginIcons img {
+    height: 20px;
+}
+
+.menu-container {
+    position: relative; 
+    display: inline-block;
+    text-align: center;
+}
+
+.menu-container img{
+    height: 40px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.menu-trigger {
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #FFDED5;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    border-radius: 5px;
+    z-index: 100;
+    width: 150px;
+}
+
+.menu a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #FF7A55;
+    font-size: 14px;
+    text-align: left;
+}
+
+.menu a:hover {
+    background-color: #FF7A55;
+    color: #FFDED5;
+}
+
+
+
+input[type="search"] {
+    padding: 3px 20px;
+    font-size: 16px;
+    border: 2px solid #FF3700;
+    border-radius: 25px;
+    outline: none;
+    background-color: #f0f0f0;
+    transition: all 0.3s ease;
+    color: #FF3700;
+    font-weight: 600;
+}
+
+input[type="search"]:focus {
+    border-color: #FF7A55;
+    box-shadow: 0 0 5px rgba(255, 122, 85, 0.5);
+    background-color: #e0e0e0;
+}
+
+button {
+    background-color: #f05033;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+button:hover {
+    background-color:white ;
+    color:#d43f2a ;
+}
+
+
+
+/******************************** FOOTER *******************************************************/
+
+
+.footer ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+    height: 100h;
+    gap: 5px;
+    
+}
+
+.footer div {
+    gap: 50px;
+}
+
+.footer img {
+    height: 20px;
+    transform: translateY(5px);
+}
+
+.footer-header {
+    color: #FF3700;
+    text-decoration: none;
+    font-size: 15px;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    text-align: left;
+}
+
+.footer div {
+    align-items: flex-start;
+    align-content: center;
+}
+
+
+.footer span, .footer a {
+    color: #FF7A55;
+    text-decoration: none;
+    font-size: 12px;
+    padding-right: 10px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.logo img {
+    height: 150px;
+}
+
+
+.end {
+    background-color: #FF3700;
+    
+    padding: 10px;
+    text-align: left;
+}
+
+.end span {
+    color:white;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    font-size: 12px;
+}
