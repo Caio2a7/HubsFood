@@ -7,6 +7,11 @@
     list-style: none;
 }
 
+/*!!!! ESTILOS DE RESPONSIVIDADE !!!!*/
+.footer, .end, .header, .main{
+    width: 98.79vw !important;
+}
+/*!!!! ESTILOS DE RESPONSIVIDADE !!!!*/
 body {
     max-width: 1200px;
     margin: 0 auto;

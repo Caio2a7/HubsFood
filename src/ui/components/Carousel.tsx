@@ -13,6 +13,7 @@ interface CarouselProps {
 const Carousel: React.FC<CarouselProps> = ({ hubs }) => {
   return (
     <div style={{ padding: "10px", backgroundColor: "transparent" }}>
+      <h3 style={{ textAlign: "center", color: "#FF4500", fontSize: "20px" }}>Hubs Cadastrados</h3>
       <Swiper
         spaceBetween={10} // Espaçamento ajustado entre os itens
         slidesPerView={4} // Mostra quatro hubs por slide

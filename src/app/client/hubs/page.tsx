@@ -9,6 +9,8 @@ import Head from 'next/head';
 import '@/ui/assets/css/geral/style-header-footer.css';
 import '@/ui/assets/css/geral/style-body.css';
 import '@/ui/assets/css/componentes/style-carousel.css';
+import Header from "@/ui/components/Header";
+import Footer from "@/ui/components/Footer";
 // Gerando os parâmetros estáticos (SSG) com os IDs dos hubs
 export const generateStaticParams = async () => {
   const hubs = await getHubs(); // Obtemos todos os hubs
