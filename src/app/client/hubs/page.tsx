@@ -2,6 +2,8 @@
 import { Hub } from "@/ui/types/hub";
 import { getHubs } from "@/ui/utils/hubsFetcher";
 import Link from "next/link";
+import React from "react";
+import Carousel from "@/ui/components/Carousel";
 import Script from 'next/script';
 import Head from 'next/head';
 import '@/ui/assets/css/geral/style-header-footer.css';
@@ -16,7 +18,16 @@ export const generateStaticParams = async () => {
 // Página de exibição dos hubs
 export default async function HubsPage() {
   const hubs: Hub[] = await getHubs(); // Pegamos os hubs
- 
+  const teste = [
+    { name: "Midway Mall", imagePath: "/imagens/icon_midway.png" },
+    { name: "Natal Shopping", imagePath: "/imagens/icon_natalShopping.png" },
+    { name: "Partage Norte Shopping", imagePath: "/imagens/icon_partage.png" },
+    { name: "Praia Shopping", imagePath: "/imagens/icon_praiaShopping.png" },
+    { name: "Hub Extra", imagePath: "/imagens/icon_midway.png" },
+    { name: "Hub Novo", imagePath: "/imagens/icon_natalShopping.png" },
+    { name: "Outro Hub", imagePath: "/imagens/icon_partage.png" },
+    { name: "Mais Hubs", imagePath: "/imagens/icon_praiaShopping.png" },
+  ];
   return (
     <main>
       <h1>Hubs</h1>
@@ -76,31 +87,9 @@ export default async function HubsPage() {
 
 <div className="empty"></div>
 
-<div className="body-carousel">
-    <h3>Hubs Capim Macio</h3>
-    <div className="owl-carousel" id="carousel1">
-        <div>
-            <a href="cardapioProdutos/paginaHub.html"><img src="../../imagens/icon_midway.png" alt="Midway Mall Icon" /></a>
-            <span>Midway Mall</span>
-        </div>
-        <div>
-            <a href="cardapioProdutos/paginaHub.html"><img src="../../imagens/icon_natalShopping.png" alt="Natal Shopping Icon" /></a>
-            <span>Natal Shopping</span>
-        </div>
-        <div>
-            <a href="cardapioProdutos/paginaHub.html"><img src="../../imagens/icon_partage.png" alt="Partage Norte Shopping Icon" /></a>
-            <span>Partage Norte Shopping</span>
-        </div>
-        <div>
-            <a href="cardapioProdutos/paginaHub.html"><img src="../../imagens/icon_praiaShopping.png" alt="Praia Shopping Icon" /></a>
-            <span>Praia Shopping</span>
-        </div>
+<div>
+      <Carousel hubs={teste} />
     </div>
-    <div className="custom-nav">
-        <button className="custom-prev" id="carousel1-prev">←</button>
-        <button className="custom-next" id="carousel1-next">→</button>
-    </div>
-</div>
 
 {/* Repita a estrutura das carousels aqui, aplicando as mesmas mudanças */}
 

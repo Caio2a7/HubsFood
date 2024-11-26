@@ -3,8 +3,20 @@ import '@/ui/assets/css/geral/style-header-footer.css';
 import '@/ui/assets/css/geral/style-body.css';
 import '@/ui/assets/css/componentes/style-carousel.css';
 import '@/ui/assets/css/geral/style-modal.css';
+import React from "react";
+import BigCarousel from "@/ui/components/BigCarousel";
 
 export default function HomePage() {
+  const teste = [
+    { name: "Midway Mall", imagePath: "/imagens/icon_midway.png" },
+    { name: "Natal Shopping", imagePath: "/imagens/icon_natalShopping.png" },
+    { name: "Partage Norte Shopping", imagePath: "/imagens/icon_partage.png" },
+    { name: "Praia Shopping", imagePath: "/imagens/icon_praiaShopping.png" },
+    { name: "Hub Extra", imagePath: "/imagens/icon_midway.png" },
+    { name: "Hub Novo", imagePath: "/imagens/icon_natalShopping.png" },
+    { name: "Outro Hub", imagePath: "/imagens/icon_partage.png" },
+    { name: "Mais Hubs", imagePath: "/imagens/icon_praiaShopping.png" },
+  ];
   return (
     <>
       <Head>
@@ -80,30 +92,8 @@ export default function HomePage() {
               </div>
             </div>
             {/* Carousel */}
-            <div className="body-carousel">
-              <h3>Hubs Cadastrados</h3>
-              <div className="owl-carousel" id="carousel1">
-                <div>
-                  <img src="/imagens/icon_midway.png" alt="Midway Mall Icon" />
-                  <span>Midway Mall</span>
-                </div>
-                <div>
-                  <img src="/imagens/icon_natalShopping.png" alt="Natal Shopping Icon" />
-                  <span>Natal Shopping</span>
-                </div>
-                <div>
-                  <img src="/imagens/icon_partage.png" alt="Partage Shopping Icon" />
-                  <span>Partage Norte Shopping</span>
-                </div>
-                <div>
-                  <img src="/imagens/icon_praiaShopping.png" alt="Praia Shopping Icon" />
-                  <span>Praia Shopping</span>
-                </div>
-              </div>
-              <div className="custom-nav">
-                <button className="custom-prev" id="carousel1-prev">←</button>
-                <button className="custom-next" id="carousel1-next">→</button>
-              </div>
+            <div style={{margin: '50px'}}>
+              <BigCarousel hubs={teste}/>  
             </div>
           </div>
           <div className="footer container">
