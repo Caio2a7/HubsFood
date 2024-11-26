@@ -5,6 +5,14 @@ import { createProduct } from "@/services/products/productPOST";
 import { updateProduct } from "@/services/products/productPUT";
 import { deleteProduct } from "@/services/products/productDELETE";
 import { getClientIdFromCookie } from "@/ui/utils/getToken";
+import Link from "next/link";
+import Script from 'next/script';
+import Head from 'next/head';
+import '@/ui/assets/css/geral/style-header-footer.css';
+import '@/ui/assets/css/geral/style-body.css';
+import '@/ui/assets/css/paginas/styleperfilEstabelecimento.css';
+import '@/ui/assets/css/componentes/style-carousel.css';
+
 
 export default function VendorMenuPage() {
   const [clientId, setClientId] = useState<number | null>(null);
@@ -183,6 +191,100 @@ export default function VendorMenuPage() {
           </li>
         ))}
       </ul>
+      <div>
+      <div className="header container">
+    <div className="container">
+        <div>
+            <img src="/imagens/logoMenuSuperior.png" alt="" />
+        </div>
+    </div>
+
+    <div className="user">
+        <div className="menu-container">
+            <img src="/imagens/userEstabelecimento.png" alt="Foto de Perfil" className="menu-trigger" />
+            <div className="menu" id="menu">
+                <a href="perfilEstabelecimento.html">Perfil</a>
+                <a href="registrocardapioEstabelecimento.html">Cardápio</a>
+                <a href="#item3">Pedidos</a>
+                <a href="../../templates/areaNaoLogada/index.html">Sair</a>
+            </div>
+        </div>
+        <span>Bob's</span>
+    </div>
+</div>
+
+<main>
+    <div className="escolhaFundo">
+        <div className="containerEstabelecimento">
+            <div><img src="/imagens/userEstabelecimento.png" alt="Foto de Perfil" /></div>
+        </div>
+    </div>
+
+    <div className="produtos">
+        <div className="tituloGrupoAlimentar">
+            <h3>Combo </h3> 
+            <img src="/imagens/pinEditar.png" alt="" />
+        </div>
+        <div className="body-carousel">
+            <h3>Hubs Cadastrados</h3>
+            <div className="owl-carousel" id="carousel1">
+                <div>
+                    <img src="/imagens/icon_midway.png" alt="Midway Mall Icon" />
+                    <span>Midway Mall</span>
+                </div>
+
+                <div>
+                    <img src="/imagens/icon_natalShopping.png" alt="Natal Shopping Icon" />
+                    <span>Natal Shopping</span>
+                </div>
+
+                <div>
+                    <img src="/imagens/icon_partage.png" alt="Partage Shopping Icon" />
+                    <span>Partage Norte Shopping</span>
+                </div>
+                <div>
+                    <img src="/imagens/icon_praiaShopping.png" alt="Praia Shopping Icon" />
+                    <span>Praia Shopping</span>
+                </div>
+            </div>
+            <div className="custom-nav">
+                <button className="custom-prev" id="carousel1-prev">← </button>
+                <button className="custom-next" id="carousel1-next"> →</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div className="footer container">
+    <div className="logo">
+        <img src="/imagens/logoInferior.png" alt="Logo Inferior" />
+    </div>
+
+    <div className="container">
+        <div>
+            <ul>
+                <li className="footer-header">Links:</li>
+                <li><img src="/imagens/logoInstagram.png" alt="Instagram" /><a href="https://www.instagram.com/"><span>Instagram</span></a></li>
+                <li><img src="/imagens/logoPinterest.png" alt="Pinterest" /><a href="https://br.pinterest.com/"><span>Pinterest</span></a></li>
+            </ul>
+        </div>
+        <div>
+            <ul>
+                <li className="footer-header">Contatos:</li>
+                <li><img src="/imagens/pinLocation.png" alt="Pin" /><span>3º piso do Instituto Metrópole Digital</span></li>
+                <li><img src="/imagens/pinPhone.png" alt="Phone" /><span>(84) 9 8888-8888</span></li>
+                <li><img src="/imagens/pinEmail.png" alt="Email" /><span>hubsfood@gmail.com</span></li>
+                <li><img src="/imagens/pinHorario.png" alt="Horário" /><span>24h</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div className="end">
+    <span>Copyright @ 2024 All rights reserved</span>
+</div>
+
+      </div>
     </main>
   );
 }

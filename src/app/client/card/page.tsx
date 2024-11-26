@@ -3,14 +3,13 @@ import Script from 'next/script';
 import Head from 'next/head';
 import '@/ui/assets/css/geral/style-header-footer.css';
 import '@/ui/assets/css/geral/style-body.css';
-import '@/ui/assets/css/componentes/style-addItem.css';
+import '@/ui/assets/css/paginas/style-pagamento.css';
 
 
-
-export default function Chart() {
-  return (
-    <div>
-      <div className="header container">
+export default function Card(){
+    return(
+        <>
+            <div className="header container">
     <div className="container">
         <div>
             <img src="/imagens/logoMenuSuperior.png" alt="" />
@@ -26,33 +25,41 @@ export default function Chart() {
     </div>
     <div className="user">
         <div className="loginIcons"><a href="#item2"><img src="/imagens/iconAlarm.png" alt="Notificações" /></a></div>
-        <div className="loginIcons">
-            <a href="carrinho.html"><img src="/imagens/iconCarrinho.png" alt="Carrinho" /></a>
-        </div>
+        <div className="loginIcons"><a href="carrinho.html"><img src="/imagens/iconCarrinho.png" alt="Carrinho" /></a></div>
         <div className="menu-container">
             <img src="/imagens/photoUser.png" alt="Foto de Perfil" className="menu-trigger" />
             <div className="menu" id="menu">
-                <a href="../configuracoesCliente/perfilCliente.html">Perfil</a>
-                <a href="../configuracoesCliente/pedidosCliente.html">Meus pedidos</a>
-                <a href="../../areaNaoLogada/index.html">Sair</a>
+                <a href="perfilCliente.html">Perfil</a>
+                <a href="pedidosCliente.html">Meus pedidos</a>
+                <a href="#item3">Sair</a>
             </div>
         </div>
         <span>João Domingus</span>
     </div>
 </div>
 
-<div className="main" style={{backgroundImage: 'none'}}>
-    <div className="head_estabelecimento">
-        <div className="head_estabLeft">
-            <div>
-                <img src="/imagens/icon_midway.png" alt="Midway Mall" />
+<div className="main" style={{backgroundImage: 'none',
+            paddingTop: '30px',
+            paddingBottom: '30px'}}>
+    <div className="paymentContainer">
+        <div className="payment-box">
+            <h1>Pagamento por cartão de crédito</h1>
+            <div className="total-section">
+                <span>Total:</span>
+                <span className="total-value">R$ 150,00</span>
             </div>
-            <div>
-                <ul>
-                    <li>Hub:<span>Midway Mall</span></li>
-                    <li>Horário de funcionamento:<span>10h às 22h</span></li>
-                    <li>Aberto</li>
-                </ul>
+            <div className="dropdown-section">
+                <label htmlFor="cardDropdown">Selecione um cartão:</label>
+                <select id="cardDropdown">
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="visa">Visa - **** 1234</option>
+                    <option value="mastercard">MasterCard - **** 5678</option>
+                    <option value="amex">Amex - **** 9012</option>
+                </select>
+            </div>
+            <button id="pagar">Pagar</button>
+            <div id="confirmationMessage" className="hidden">
+                <p>Pagamento processado com sucesso!</p>
             </div>
         </div>
     </div>
@@ -86,6 +93,6 @@ export default function Chart() {
     <span>Copyright @ 2024 All rights reserved</span>
 </div>
 
-    </div>
-  );
+        </>
+    );
 }
