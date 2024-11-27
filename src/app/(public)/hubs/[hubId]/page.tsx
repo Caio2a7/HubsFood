@@ -85,7 +85,7 @@ export default async function HubDetailsPage({ params }: { params: { hubId: stri
                   </h3>
                   <p className="text-sm text-gray-600">{vendor.description}</p>
                   <Link href={`/hubs/${hubId}/vendors/${vendor.id}`}>
-                    <button className="absolute bottom-4 right-4 bg-[#FF3700] text-white font-semibold px-4 py-2 rounded-full shadow-md hover:bg-[#FF7A55] transition-colors duration-300">
+                    <button className="absolute top-2 right-2 bg-[#FF3700] text-white font-semibold px-4 py-2 rounded-full shadow-md hover:bg-[#FF7A55] transition-colors duration-300">
                       Ver detalhes
                     </button>
                   </Link>

@@ -8,13 +8,15 @@ import "swiper/css/navigation";
 import Link from "next/link";
 
 interface CarouselProps {
-  hubs: { id: string; name: string; imagePath: string }[]; // Inclui o ID do hub
+  hubs: { id: string; name: string; imagePath: string }[];
+  carouselTitle: string // Inclui o ID do hub,
+  carouselLink: string
 }
 
-const Carousel: React.FC<CarouselProps> = ({ hubs }) => {
+const Carousel: React.FC<CarouselProps> = ({ hubs, carouselTitle, carouselLink }) => {
   return (
     <div className="py-10 bg-transparent">
-      <h3 className="text-center text-orange-600 text-2xl mb-6">Hubs Cadastrados</h3>
+      <h3 className="text-center text-orange-600 text-2xl mb-6">{carouselTitle}</h3>
       <Swiper
         spaceBetween={10}
         slidesPerView={4}
@@ -33,7 +35,7 @@ const Carousel: React.FC<CarouselProps> = ({ hubs }) => {
       >
         {hubs.map((hub) => (
           <SwiperSlide key={hub.id}>
-            <Link href={`/hubs/${hub.id}`} className="block">
+            <Link href={`${carouselLink}${hub.id}`} className="block">
               <div className="flex flex-col items-center justify-center bg-transparent">
                 <img
                   src={hub.imagePath}

@@ -54,7 +54,7 @@
     },
     "imagePath": "/imagens/icon_midway.png",
     "details": "O Midway Mall Hub é um centro comercial de referência em Natal, oferecendo uma variedade de lojas, restaurantes e serviços em um ambiente moderno e confortável.",
-    "vendors": [1, 2]
+    "vendors": [1, 2, 3, 5]
   },
   {
     "id": "2",
@@ -134,84 +134,96 @@
         "name": "Pizza Place",
         "description": "Best pizzas in town",
         "imagePath": "/imagens/restaurante.png",
-        "hubId": 1
+        "hubId": 1,
+        "products": [1, 2, 3, 4, 5, 6]
       },
       {
         "id": "2",
         "name": "Sushi World",
         "description": "Fresh sushi rolls",
         "imagePath": "/imagens/restaurante.png",
-        "hubId": 1
+        "hubId": 1,
+        "products": [1, 2, 3, 5]
       },
       {
         "id": "3",
         "name": "Burger Joint",
         "description": "Juicy burgers",
         "imagePath": "/imagens/restaurante.png",
-        "hubId": 2
+        "hubId": 2,
+        "products": [1, 2, 3, 5]
       },
       {
         "id": "4",
         "name": "Taco Corner",
         "description": "Authentic tacos",
         "imagePath": "/imagens/restaurante.png",
-        "hubId": 2
+        "hubId": 2,
+        "products": [1, 2, 3, 5]
       },
       {
         "id": "5",
         "name": "Giraffas",
         "description": "Delicious Brazilian fast food",
         "imagePath": "/imagens/restaurante.png",
-        "hubId": 2
+        "hubId": 2,
+        "products": [1, 2, 3, 5]
       },
       {
         "id": "6",
         "name": "Pittsburgh",
         "description": "Famous for its hearty meals",
         "imagePath": "/imagens/restaurante.png",
-        "hubId": 2
+        "hubId": 2,
+        "products": [1, 2, 3, 5]
       },
       {
         "id": "7",
         "name": "McDonald's",
         "description": "Iconic burgers and fries",
         "imagePath": "/imagens/restaurante.png",
-        "hubId": 3
+        "hubId": 3,
+        "products": [1, 2, 3, 5]
       },
       {
         "id": "8",
         "name": "Burger King",
         "description": "Grilled perfection",
         "imagePath": "/imagens/restaurante.png",
-        "hubId": 3
+        "hubId": 3,
+        "products": [1, 2, 3, 5]
       },
       {
         "id": "9",
         "name": "Subway",
         "description": "Freshly made sandwiches",
         "imagePath": "/imagens/restaurante.png",
-        "hubId": 3
+        "hubId": 3,
+        "products": [1, 2, 3, 5]
       },
       {
         "id": "10",
         "name": "Starbucks",
         "description": "Specialty coffee and more",
         "imagePath": "/imagens/restaurante.png",
-        "hubId": 4
+        "hubId": 4,
+        "products": [1, 2, 3, 4, 5, 6]
       },
       {
         "id": "11",
         "name": "KFC",
         "description": "Famous for fried chicken",
         "imagePath": "/imagens/restaurante.png",
-        "hubId": 4
+        "hubId": 4,
+        "products": [1, 2, 3, 5]
       },
       {
         "id": "12",
         "name": "Outback",
         "description": "Steaks and hearty meals",
         "imagePath": "/imagens/restaurante.png",
-        "hubId": 4
+        "hubId": 4,
+        "products": [1, 2, 3, 5]
       }
     ],
   
@@ -221,49 +233,56 @@
       "name": "Margherita Pizza",
       "description": "Classic margherita with fresh basil",
       "price": 12.99,
-      "vendorId": 1
+      "vendorId": 1,
+      "imagePath": "/imagens/restaurante.png"
     },
     {
       "id": "2",
       "name": "Pepperoni Pizza",
       "description": "Loaded with pepperoni slices",
       "price": 14.99,
-      "vendorId": 1
+      "vendorId": 1,
+      "imagePath": "/imagens/restaurante.png"
     },
     {
       "id": "4",
       "name": "Spicy Tuna Roll",
       "description": "Fresh tuna with a kick",
       "price": 9.99,
-      "vendorId": 2
+      "vendorId": 2,
+      "imagePath": "/imagens/restaurante.png"
     },
     {
       "id": "5",
       "name": "Cheeseburger",
       "description": "Classic cheeseburger with cheddar",
       "price": 10.99,
-      "vendorId": 3
+      "vendorId": 3,
+      "imagePath": "/imagens/restaurante.png"
     },
     {
       "id": "6",
       "name": "Bacon Burger",
       "description": "Topped with crispy bacon",
       "price": 12.99,
-      "vendorId": 3
+      "vendorId": 3,
+      "imagePath": "/imagens/restaurante.png"
     },
     {
       "id": "7",
       "name": "Chicken Taco",
       "description": "Grilled chicken with fresh toppings",
       "price": 3.99,
-      "vendorId": 4
+      "vendorId": 4,
+      "imagePath": "/imagens/restaurante.png"
     },
     {
       "id": "8",
       "name": "Beef Taco",
       "description": "Seasoned beef with salsa",
       "price": 4.99,
-      "vendorId": 4
+      "vendorId": 4,
+      "imagePath": "/imagens/restaurante.png"
     },
     {
       "id": "227f",
@@ -271,6 +290,7 @@
       "description": "ASSSSSSSS",
       "price": 12,
       "vendorId": 2,
+      "imagePath": "/imagens/restaurante.png",
       "category": "dd",
       "available": true
     }

@@ -58,7 +58,7 @@ export default async function HubsPage() {
 
           {/* Carousel */}
           <div className="w-full max-w-6xl mt-0 mb-20">
-            <Carousel hubs={hubs} />
+            <Carousel carouselLink="/hubs/" carouselTitle="Hubs Cadastrados" hubs={hubs} />
           </div>
           {/* Lista de hubs */}
           <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
