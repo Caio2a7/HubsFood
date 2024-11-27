@@ -5,15 +5,15 @@
       "username": "client1",
       "password": "$2a$10$zY3v1W3xH9PTzIMNYd0KLOL.G28chANSzXbt/nq2KPcXUczFHSU4W",
       "role": "client",
-      "email": "client1@example.com"
+      "email": "client1@example.com",
+      "imagePath": "/imagens/photoUser.png"
     },
     {
       "id": "2",
       "username": "vendor1",
       "password": "$2a$10$b4epCtPs0zdVogzmqxK.X.SGboi7dzKA7qdHxie4hCdDaR56GaxRK",
       "role": "vendor",
-      "email": "vendor1@example.com",
-      "hubId": 1
+      "email": "vendor1@example.com"
     },
     {
       "id": "3",
@@ -35,198 +35,280 @@
       "role": "user"
     },
     {
-      "id": 5,
+      "id": "5",
       "email": "teste@nei.ufrn.br",
       "password": "$2a$10$4zJJx/Kq9xuNASMnNPuFC.8Fp95Hzg5NchfXWi2t8fkgrk4Jh0.Z.",
       "role": "vendor"
     }
   ],
   "hubs": [
-  {
-    "id": "1",
-    "name": "Midway Mall Hub",
-    "location": {
-      "street": "123 Main St",
-      "number": 100,
-      "city": "Natal",
-      "state": "RN",
-      "cep": "59075-000"
+    {
+      "id": "1",
+      "name": "Midway Mall Hub",
+      "location": {
+        "street": "123 Main St",
+        "number": 100,
+        "city": "Natal",
+        "state": "RN",
+        "cep": "59075-000"
+      },
+      "imagePath": "/imagens/icon_midway.png",
+      "details": "O Midway Mall Hub é um centro comercial de referência em Natal, oferecendo uma variedade de lojas, restaurantes e serviços em um ambiente moderno e confortável.",
+      "vendors": [
+        1,
+        2,
+        3,
+        5
+      ]
     },
-    "imagePath": "/imagens/icon_midway.png",
-    "details": "O Midway Mall Hub é um centro comercial de referência em Natal, oferecendo uma variedade de lojas, restaurantes e serviços em um ambiente moderno e confortável.",
-    "vendors": [1, 2, 3, 5]
-  },
-  {
-    "id": "2",
-    "name": "Natal Shopping Hub",
-    "location": {
-      "street": "456 Broadway",
-      "number": 200,
-      "city": "Natal",
-      "state": "RN",
-      "cep": "59064-000"
+    {
+      "id": "2",
+      "name": "Natal Shopping Hub",
+      "location": {
+        "street": "456 Broadway",
+        "number": 200,
+        "city": "Natal",
+        "state": "RN",
+        "cep": "59064-000"
+      },
+      "imagePath": "/imagens/icon_natalShopping.png",
+      "details": "O Natal Shopping Hub é conhecido por ser um ponto de encontro para compras e lazer, com uma ampla seleção de lojas de marcas renomadas e opções de alimentação para todos os gostos.",
+      "vendors": [
+        3,
+        4
+      ]
     },
-    "imagePath": "/imagens/icon_natalShopping.png",
-    "details": "O Natal Shopping Hub é conhecido por ser um ponto de encontro para compras e lazer, com uma ampla seleção de lojas de marcas renomadas e opções de alimentação para todos os gostos.",
-    "vendors": [3, 4]
-  },
-  {
-    "id": "3",
-    "name": "Partage Norte Shopping Hub",
-    "location": {
-      "street": "789 Avenue North",
-      "number": 150,
-      "city": "Natal",
-      "state": "RN",
-      "cep": "59010-100"
+    {
+      "id": "3",
+      "name": "Partage Norte Shopping Hub",
+      "location": {
+        "street": "789 Avenue North",
+        "number": 150,
+        "city": "Natal",
+        "state": "RN",
+        "cep": "59010-100"
+      },
+      "imagePath": "/imagens/icon_partage.png",
+      "details": "O Partage Norte Shopping Hub combina um ambiente sofisticado com uma grande variedade de lojas e restaurantes, proporcionando uma experiência completa de compras e entretenimento.",
+      "vendors": [
+        5,
+        6
+      ]
     },
-    "imagePath": "/imagens/icon_partage.png",
-    "details": "O Partage Norte Shopping Hub combina um ambiente sofisticado com uma grande variedade de lojas e restaurantes, proporcionando uma experiência completa de compras e entretenimento.",
-    "vendors": [5, 6]
-  },
-  {
-    "id": "4",
-    "name": "Praia Shopping Hub",
-    "location": {
-      "street": "321 South Beach Blvd",
-      "number": 50,
-      "city": "Natal",
-      "state": "RN",
-      "cep": "59090-000"
+    {
+      "id": "4",
+      "name": "Praia Shopping Hub",
+      "location": {
+        "street": "321 South Beach Blvd",
+        "number": 50,
+        "city": "Natal",
+        "state": "RN",
+        "cep": "59090-000"
+      },
+      "imagePath": "/imagens/icon_praiaShopping.png",
+      "details": "Localizado próximo à praia, o Praia Shopping Hub oferece uma experiência única de compras e gastronomia, com vista para o mar e um ambiente arejado e descontraído.",
+      "vendors": [
+        7,
+        8
+      ]
     },
-    "imagePath": "/imagens/icon_praiaShopping.png",
-    "details": "Localizado próximo à praia, o Praia Shopping Hub oferece uma experiência única de compras e gastronomia, com vista para o mar e um ambiente arejado e descontraído.",
-    "vendors": [7, 8]
-  },
-  {
-    "id": "5",
-    "name": "Extra Food Hub",
-    "location": {
-      "street": "123 Market Lane",
-      "number": 400,
-      "city": "Natal",
-      "state": "RN",
-      "cep": "59060-000"
+    {
+      "id": "5",
+      "name": "Extra Food Hub",
+      "location": {
+        "street": "123 Market Lane",
+        "number": 400,
+        "city": "Natal",
+        "state": "RN",
+        "cep": "59060-000"
+      },
+      "imagePath": "/imagens/icon_midway.png",
+      "details": "O Extra Food Hub é ideal para quem busca produtos alimentares de alta qualidade e uma diversidade de opções gastronômicas em um único local.",
+      "vendors": [
+        9,
+        10
+      ]
     },
-    "imagePath": "/imagens/icon_midway.png",
-    "details": "O Extra Food Hub é ideal para quem busca produtos alimentares de alta qualidade e uma diversidade de opções gastronômicas em um único local.",
-    "vendors": [9, 10]
-  },
-  {
-    "id": "6",
-    "name": "Novo Hub Center",
-    "location": {
-      "street": "789 New Street",
-      "number": 300,
-      "city": "Parnamirim",
-      "state": "RN",
-      "cep": "59150-000"
+    {
+      "id": "6",
+      "name": "Novo Hub Center",
+      "location": {
+        "street": "789 New Street",
+        "number": 300,
+        "city": "Parnamirim",
+        "state": "RN",
+        "cep": "59150-000"
+      },
+      "imagePath": "/imagens/icon_natalShopping.png",
+      "details": "O Novo Hub Center é um espaço moderno que oferece tanto opções de lazer quanto de compras, com uma variedade de restaurantes e atividades para toda a família.",
+      "vendors": [
+        11,
+        12
+      ]
+    }
+  ],
+  "vendors": [
+    {
+      "id": "1",
+      "name": "Pizza Place",
+      "description": "Best pizzas in town",
+      "imagePath": "/imagens/restaurante.png",
+      "hubId": 1,
+      "products": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
-    "imagePath": "/imagens/icon_natalShopping.png",
-    "details": "O Novo Hub Center é um espaço moderno que oferece tanto opções de lazer quanto de compras, com uma variedade de restaurantes e atividades para toda a família.",
-    "vendors": [11, 12]
-  }
-],
-
-    "vendors": [
-      {
-        "id": "1",
-        "name": "Pizza Place",
-        "description": "Best pizzas in town",
-        "imagePath": "/imagens/restaurante.png",
-        "hubId": 1,
-        "products": [1, 2, 3, 4, 5, 6]
-      },
-      {
-        "id": "2",
-        "name": "Sushi World",
-        "description": "Fresh sushi rolls",
-        "imagePath": "/imagens/restaurante.png",
-        "hubId": 1,
-        "products": [1, 2, 3, 5]
-      },
-      {
-        "id": "3",
-        "name": "Burger Joint",
-        "description": "Juicy burgers",
-        "imagePath": "/imagens/restaurante.png",
-        "hubId": 2,
-        "products": [1, 2, 3, 5]
-      },
-      {
-        "id": "4",
-        "name": "Taco Corner",
-        "description": "Authentic tacos",
-        "imagePath": "/imagens/restaurante.png",
-        "hubId": 2,
-        "products": [1, 2, 3, 5]
-      },
-      {
-        "id": "5",
-        "name": "Giraffas",
-        "description": "Delicious Brazilian fast food",
-        "imagePath": "/imagens/restaurante.png",
-        "hubId": 2,
-        "products": [1, 2, 3, 5]
-      },
-      {
-        "id": "6",
-        "name": "Pittsburgh",
-        "description": "Famous for its hearty meals",
-        "imagePath": "/imagens/restaurante.png",
-        "hubId": 2,
-        "products": [1, 2, 3, 5]
-      },
-      {
-        "id": "7",
-        "name": "McDonald's",
-        "description": "Iconic burgers and fries",
-        "imagePath": "/imagens/restaurante.png",
-        "hubId": 3,
-        "products": [1, 2, 3, 5]
-      },
-      {
-        "id": "8",
-        "name": "Burger King",
-        "description": "Grilled perfection",
-        "imagePath": "/imagens/restaurante.png",
-        "hubId": 3,
-        "products": [1, 2, 3, 5]
-      },
-      {
-        "id": "9",
-        "name": "Subway",
-        "description": "Freshly made sandwiches",
-        "imagePath": "/imagens/restaurante.png",
-        "hubId": 3,
-        "products": [1, 2, 3, 5]
-      },
-      {
-        "id": "10",
-        "name": "Starbucks",
-        "description": "Specialty coffee and more",
-        "imagePath": "/imagens/restaurante.png",
-        "hubId": 4,
-        "products": [1, 2, 3, 4, 5, 6]
-      },
-      {
-        "id": "11",
-        "name": "KFC",
-        "description": "Famous for fried chicken",
-        "imagePath": "/imagens/restaurante.png",
-        "hubId": 4,
-        "products": [1, 2, 3, 5]
-      },
-      {
-        "id": "12",
-        "name": "Outback",
-        "description": "Steaks and hearty meals",
-        "imagePath": "/imagens/restaurante.png",
-        "hubId": 4,
-        "products": [1, 2, 3, 5]
-      }
-    ],
-  
+    {
+      "id": "2",
+      "name": "Sushi World",
+      "description": "Fresh sushi rolls",
+      "imagePath": "/imagens/restaurante.png",
+      "hubId": 1,
+      "products": [
+        1,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Burger Joint",
+      "description": "Juicy burgers",
+      "imagePath": "/imagens/restaurante.png",
+      "hubId": 2,
+      "products": [
+        1,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Taco Corner",
+      "description": "Authentic tacos",
+      "imagePath": "/imagens/restaurante.png",
+      "hubId": 2,
+      "products": [
+        1,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Giraffas",
+      "description": "Delicious Brazilian fast food",
+      "imagePath": "/imagens/restaurante.png",
+      "hubId": 2,
+      "products": [
+        1,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Pittsburgh",
+      "description": "Famous for its hearty meals",
+      "imagePath": "/imagens/restaurante.png",
+      "hubId": 2,
+      "products": [
+        1,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "id": "7",
+      "name": "McDonald's",
+      "description": "Iconic burgers and fries",
+      "imagePath": "/imagens/restaurante.png",
+      "hubId": 3,
+      "products": [
+        1,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "id": "8",
+      "name": "Burger King",
+      "description": "Grilled perfection",
+      "imagePath": "/imagens/restaurante.png",
+      "hubId": 3,
+      "products": [
+        1,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "id": "9",
+      "name": "Subway",
+      "description": "Freshly made sandwiches",
+      "imagePath": "/imagens/restaurante.png",
+      "hubId": 3,
+      "products": [
+        1,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "id": "10",
+      "name": "Starbucks",
+      "description": "Specialty coffee and more",
+      "imagePath": "/imagens/restaurante.png",
+      "hubId": 4,
+      "products": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "11",
+      "name": "KFC",
+      "description": "Famous for fried chicken",
+      "imagePath": "/imagens/restaurante.png",
+      "hubId": 4,
+      "products": [
+        1,
+        2,
+        3,
+        5
+      ]
+    },
+    {
+      "id": "12",
+      "name": "Outback",
+      "description": "Steaks and hearty meals",
+      "imagePath": "/imagens/restaurante.png",
+      "hubId": 4,
+      "products": [
+        1,
+        2,
+        3,
+        5
+      ]
+    }
+  ],
   "products": [
     {
       "id": "1",
@@ -325,11 +407,25 @@
       "createdAt": "2024-11-24T19:18:15.089Z"
     },
     {
-      "id": "0112",
+      "id": "4",
       "clientId": 1,
       "productId": 3,
       "status": "pending",
       "createdAt": "2024-11-24T19:01:35.006Z"
+    },
+    {
+      "id": "5",
+      "clientId": 1,
+      "productId": "4",
+      "status": "pending",
+      "createdAt": "2024-11-27T12:21:25.609Z"
+    },
+    {
+      "id": "6",
+      "clientId": 1,
+      "productId": "4",
+      "status": "pending",
+      "createdAt": "2024-11-27T12:23:12.891Z"
     }
   ]
 }
