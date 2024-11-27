@@ -1,84 +1,48 @@
-import Link from "next/link";
-import Script from 'next/script';
-import Head from 'next/head';
-import '@/ui/assets/css/geral/style-header-footer.css';
-import '@/ui/assets/css/geral/style-body.css';
-import '@/ui/assets/css/paginas/style-pagamento.css';
+"use client";
 
+import Header from "@/ui/components/Header";
+import Footer from "@/ui/components/Footer";
 
-export default function Pix(){
-    return(
-        <>
-            <div className="header container">
-    <div className="container">
-        <div>
-            <img src="/imagens/logoMenuSuperior.png" alt="" />
+export default function Pix() {
+  return (
+    <div className="bg-gray-100 min-h-screen flex flex-col">
+      <Header />
+
+      <main className="flex-1 max-w-5xl mx-auto py-10 px-6">
+        <div className="bg-white shadow-lg rounded-lg p-8 flex flex-col items-center text-center">
+          <h1 className="text-4xl font-bold text-[#FF7A55] mb-6">Pagamento via Pix</h1>
+          <p className="text-lg text-gray-700 mb-4">
+            Utilize o QR Code ou a chave Pix para realizar o pagamento.
+          </p>
+
+          {/* QR Code Section */}
+          <div className="mb-6">
+            <img
+              src="/imagens/qrcode.png"
+              alt="QR Code"
+              className="w-56 h-56 object-cover rounded-lg shadow-md hover:shadow-lg transition"
+            />
+          </div>
+
+          {/* Pix Key Section */}
+          <div className="bg-gray-100 p-4 rounded-lg shadow-inner">
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">Chave Pix:</h2>
+            <p className="text-lg font-medium text-gray-600 mb-4">
+              estabelecimento@emailPIX.com
+            </p>
+            <p className="text-sm text-gray-500">
+              Após o pagamento, aguarde um email de confirmação.
+            </p>
+          </div>
+
+          {/* Botão para Voltar */}
+          <button className="mt-8 bg-[#FF7A55] text-white font-semibold px-6 py-3 rounded-lg hover:bg-[#ff4f4f] transition">
+            Voltar ao Início
+          </button>
         </div>
-        <div>
-            <ul>
-                <li><a href="../indexLogado.html">Início</a></li>
-                <li><a href="../hubsLogado.html">Hubs</a></li>
-                <li><a href="../sobreLogado.html">Sobre</a></li>
-                <li><a href="../contatosLogado.html">Contatos</a></li>
-            </ul>
-        </div>
-    </div>
-    <div className="user">
-        <div className="loginIcons"><a href="#item2"><img src="/imagens/iconAlarm.png" alt="Notificações" /></a></div>
-        <div className="loginIcons"><a href="carrinho.html"><img src="/imagens/iconCarrinho.png" alt="Carrinho" /></a></div>
-        <div className="menu-container">
-            <img src="/imagens/photoUser.png" alt="Foto de Perfil" className="menu-trigger" />
-            <div className="menu" id="menu">
-                <a href="../configuracoesCliente/perfilCliente.html">Perfil</a>
-                <a href="../configuracoesCliente/pedidosCliente.html">Meus pedidos</a>
-                <a href="../../areaNaoLogada/index.html">Sair</a>
-            </div>
-        </div>
-        <span>João Domingus</span>
-    </div>
-</div>
+      </main>
 
-<div className="main" style={{backgroundImage: 'none',
-            paddingTop: '30px',
-            paddingBottom: '30px'}}>
-    <div className="pagamentoPixContainer">
-        <div><h3>Pagamento</h3></div>
-        <div><h2>via Pix</h2></div>
-        <img src="/imagens/qrcode.png" alt="qrcode" />
-        <div><h3>Ou pela chave:</h3></div>
-        <div><span>estabelecimento@emailPIX.com</span></div>
-        <div><span>Aguarde um email de confirmação do pagamento aprovado.</span></div>
+      <Footer />
     </div>
-</div>
-
-<div className="footer container">
-    <div className="logo">
-        <img src="/imagens/logoInferior.png" alt="" />
-    </div>
-    <div className="container">
-        <div>
-            <ul>
-                <li className="footer-header">Links:</li>
-                <li><img src="/imagens/logoInstagram.png" alt="" /><a href="https://www.instagram.com/"><span>Instagram</span></a></li>
-                <li><img src="/imagens/logoPinterest.png" alt="" /><a href="https://br.pinterest.com/"><span>Pinterest</span></a></li>
-            </ul>
-        </div>
-        <div>
-            <ul>
-                <li className="footer-header">Contatos:</li>
-                <li><img src="/imagens/pinLocation.png" alt="" /><span>3º piso do Instituto Metrópole Digital</span></li>
-                <li><img src="/imagens/pinPhone.png" alt="" /><span>(84) 9 8888-8888</span></li>
-                <li><img src="/imagens/pinEmail.png" alt="" /><span>hubsfood@gmail.com</span></li>
-                <li><img src="/imagens/pinHorario.png" alt="" /><span>24h</span></li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<div className="end">
-    <span>Copyright @ 2024 All rights reserved</span>
-</div>
-
-        </>
-    );
+  );
 }

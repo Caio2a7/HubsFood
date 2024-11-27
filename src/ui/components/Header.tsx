@@ -92,7 +92,7 @@ const Header: React.FC = () => {
         <nav>
           {isLoggedIn ? (
             <ul className="flex items-center space-x-6">
-              {"Início Hubs Pedidos".split(" ").map((item, index) => (
+              {"Início Hubs Carrinho Pedidos".split(" ").map((item, index) => (
                 <li
                   className="hover:scale-105 transition-all transform duration-200 px-4 py-2 rounded-lg"
                   key={index}
@@ -211,7 +211,7 @@ const Header: React.FC = () => {
               {dropdownOpen.profile && (
                 <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10">
                   <Link
-                    href="/profile"
+                    href="/client/perfil"
                     className="block py-2 px-4 text-[#FF7A55] hover:bg-[#FFDED5] transition"
                   >
                     Perfil
@@ -228,12 +228,12 @@ const Header: React.FC = () => {
                   >
                     Carrinho
                   </Link>
-                  <Link
+                  {/* <Link
                     href="/settings"
                     className="block py-2 px-4 text-[#FF7A55] hover:bg-[#FFDED5] transition"
                   >
                     Configurações
-                  </Link>
+                  </Link> */}
                 </div>
               )}
             </div>

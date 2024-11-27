@@ -2,14 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import Header from "@/ui/components/Header";
 import Footer from "@/ui/components/Footer";
-import { postOrder } from "@/services/orders/orderPOST";
 
 export default function CartPage() {
   const [cart, setCart] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const cartData = Cookies.get("cart");
@@ -26,37 +25,15 @@ export default function CartPage() {
 
   const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
-  const handleCheckout = async () => {
-    setLoading(true);
-    try {
-      const clientId = 1; // Substitua pelo ID do cliente real
-      for (const item of cart) {
-        // Cria um pedido para cada item no carrinho
-        await postOrder(clientId, item.id);
-      }
-      setSuccessMessage("Compra finalizada com sucesso!");
-      setCart([]);
-      Cookies.remove("cart"); // Limpa o carrinho após o pedido
-    } catch (error) {
-      console.error("Erro ao finalizar a compra:", error);
-      alert("Ocorreu um erro ao finalizar a compra. Tente novamente.");
-    } finally {
-      setLoading(false);
-    }
+  const handleCheckout = () => {
+    router.push("/client/pagamento"); // Redireciona para a página de seleção de pagamento
   };
 
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
-      {/* Header */}
       <Header />
 
-      {/* Main Content */}
       <main className="flex-1 max-w-7xl mx-auto py-10 px-6">
-        {successMessage && (
-          <div className="bg-green-100 text-green-800 p-4 rounded-lg mb-6">
-            {successMessage}
-          </div>
-        )}
         {cart.length === 0 ? (
           <div className="text-center">
             <h2 className="text-3xl font-semibold text-gray-700 mb-6">Seu carrinho está vazio</h2>
@@ -76,7 +53,7 @@ export default function CartPage() {
                   >
                     <div className="flex items-center gap-4">
                       <img
-                        src={item.imagePath ? item.imagePath : '/imagens/restaurante.png'}
+                        src={item.imagePath ? item.imagePath : "/imagens/restaurante.png"}
                         alt={item.name}
                         className="w-16 h-16 object-cover rounded-md shadow-md"
                       />
@@ -97,22 +74,19 @@ export default function CartPage() {
               </ul>
             </div>
 
-            {/* Total Section */}
             <div className="flex justify-between items-center mt-8">
               <div className="text-xl font-bold text-gray-800">Total: R$ {totalPrice.toFixed(2)}</div>
               <button
                 onClick={handleCheckout}
                 className="bg-[#FF6B6B] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#ff4f4f] transition"
-                disabled={loading}
               >
-                {loading ? "Processando..." : "Finalizar Compra"}
+                Ir para Pagamento
               </button>
             </div>
           </>
         )}
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

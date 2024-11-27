@@ -106,7 +106,7 @@ export default function OrdersPage() {
     <div className="bg-gray-100 min-h-screen flex flex-col">
       <Header />
 
-      <main className="flex-1 max-w-7xl mx-auto py-10 px-6">
+      <main className="flex-1 max-w-7xl mx-auto py-10 px-6 mb-20">
         <h1 className="text-4xl font-bold text-[#FF7A55] mb-8 text-center">Meus Pedidos</h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
