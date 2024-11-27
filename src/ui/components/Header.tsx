@@ -35,25 +35,42 @@ const Header: React.FC = () => {
 
         {/* Navegação */}
         <nav>
+          {isLoggedIn ?
           <ul className="flex items-center space-x-6">
-            {"Início Sobre Hubs Contatos".split(" ").map((item, index) => (
-              <li
-                className="hover:scale-105 transition-all transform duration-200 px-4 py-2 rounded-lg"
-                key={index}
+          {"Início Sobre Hubs Contatos Pedidos ".split(" ").map((item, index) => (
+            <li
+              className="hover:scale-105 transition-all transform duration-200 px-4 py-2 rounded-lg"
+              key={index}
+            >
+              <Link
+                href={`/client/${item === "Início" ? "" : item === "Sobre" ? "about" : item === "Contatos" ? "contact" : item.toLowerCase()}`}
+                className="text-[#FF7A55] font-bold text-lg sm:text-xl"
               >
-                <Link
-                  href={`/${item === "Início" ? "" : item === "Sobre" ? "about" : item === "Contatos" ? "contact" : item.toLowerCase()}`}
-                  className="text-[#FF7A55] font-bold text-lg sm:text-xl"
-                >
-                  {item}
-                </Link>
-              </li>
-            ))}
-          </ul>
+                {item}
+              </Link>
+            </li>
+          ))}
+        </ul> :
+        <ul className="flex items-center space-x-6">
+        {"Início Sobre Hubs Contatos".split(" ").map((item, index) => (
+          <li
+            className="hover:scale-105 transition-all transform duration-200 px-4 py-2 rounded-lg"
+            key={index}
+          >
+            <Link
+              href={`/${item === "Início" ? "" : item === "Sobre" ? "about" : item === "Contatos" ? "contact" : item.toLowerCase()}`}
+              className="text-[#FF7A55] font-bold text-lg sm:text-xl"
+            >
+              {item}
+            </Link>
+          </li>
+        ))}
+        </ul>
+          }
         </nav>
 
         {/* User Section */}
-        <div className="flex items-center space-x-6 border-l-2 pl-6 border-[#FF7A55]">
+        <div className="flex items-center space-x-6 pl-6">
           {/* Ícones de Notificação e Carrinho */}
           {isLoggedIn && (
             <>
@@ -93,7 +110,7 @@ const Header: React.FC = () => {
               </div>
             </div>
           ) : (
-            <Link href="/login">
+            <Link href="/auth/login">
               <button className="bg-[#FF3700] text-white font-bold px-4 py-2 rounded-lg hover:bg-[#FF7A55] transition">
                 Login
               </button>

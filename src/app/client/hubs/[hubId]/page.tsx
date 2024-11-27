@@ -1,13 +1,11 @@
-// src/app/(public)/hubs/[hubId]/page.tsx
 import { Hub } from "@/ui/types/hub";
-import { getHubs, getHubById } from "@/ui/utils/hubsFetcher";
+import { getHubById, getHubs } from "@/services/hubs/hubGET";
+import { getVendorById } from "@/services/vendors/vendorGET";
 import Link from "next/link";
-import Script from 'next/script';
-import Head from 'next/head';
-import '@/ui/assets/css/geral/style-header-footer.css';
-import '@/ui/assets/css/geral/style-body.css';
-import '@/ui/assets/css/componentes/style-carousel.css';
-// Preload and generate static paths for hubs
+import Header from "@/ui/components/Header";
+import Footer from "@/ui/components/Footer";
+import Head from "next/head";
+
 export async function generateStaticParams() {
   const hubs: Hub[] = await getHubs();
   return hubs.map((hub) => ({
@@ -15,147 +13,98 @@ export async function generateStaticParams() {
   }));
 }
 
-// Fetch data for a specific hub and generate metadata
 export async function generateMetadata({ params }: { params: { hubId: string } }) {
   const hub = await getHubById(parseInt(params.hubId));
   return {
-    title: `${hub?.name} - Details`,
+    title: `${hub?.name} - Detalhes`,
   };
 }
 
-// HubDetailsPage component
 export default async function HubDetailsPage({ params }: { params: { hubId: string } }) {
-  const hubId = parseInt(params.hubId, 10); // Obtendo o ID do hub da URL
-  const hub = await getHubById(hubId); // Buscando os dados do hub pelo ID
+  const hubId = parseInt(params.hubId, 10);
+  const hubs = await getHubById(hubId);
+  const hub = hubs && hubs.length > 0 ? hubs[0] : null;
 
   if (!hub) {
     return <div>Hub não encontrado.</div>;
   }
 
+  const vendorPromises = hub.vendors.map((vendorId: number) => getVendorById(vendorId));
+  const vendorsArray = await Promise.all(vendorPromises);
+  const vendors = vendorsArray.map((vendorArr: any) => vendorArr[0]);
+
   return (
-    <main>
-      <h1>{hub.name}</h1>
-      <p><strong>Location:</strong> {hub.location.street}, {hub.location.city}, {hub.location.state}</p>
-      <h2>Vendedores</h2>
-      <ul>
-        {hub.vendors.map((vendor) => (
-          <li key={vendor.id}>
-            <h3>{vendor.name}</h3>
-            <p>{vendor.description}</p>
-            <Link href={`/hubs/${hubId}/vendors/${vendor.id}`} passHref>
-              <button>Ver detalhes do vendedor</button>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <div>
-      <div className="header container">
+    <main className="bg-gradient-to-b from-gray-100 to-gray-50 min-h-screen flex flex-col">
+      <Head>
+        <title>{hub.name} - Detalhes</title>
+      </Head>
+      <Header />
 
-<div className="container">
-    <div>
-        <img src="../../../imagens/logoMenuSuperior.png" alt="" />
-    </div>
-    <div>
-        <ul>
-            <li><a href="../index.html">Início</a></li>
-            <li><a href="../hubs.html">Hubs</a></li>
-            <li><a href="../sobre.html">Sobre</a></li>
-            <li><a href="../contatos.html">Contatos</a></li>
-        </ul>
-    </div>
-</div>
-
-<div className="user">
-    <div className="loginIcons"><a href="contatos.html"><img src="../../../imagens/iconAlarm.png" alt="Notificações" /></a></div>
-    <div className="loginIcons"><a href="carrinho.html"><img src="../../../imagens/iconCarrinho.png" alt="Carrinho" /></a></div>
-    <div className="menu-container">
-        <img src="../../../imagens/photoUser.png" alt="Foto de Perfil" className="menu-trigger" />
-        <div className="menu" id="menu">
-            <a href="../configuracoesCliente/perfilCliente.html">Perfil</a>
-            <a href="../configuracoesCliente/pedidosCliente.html">Meus pedidos</a>
-            <a href="../../areaNaoLogada/index.html">Sair</a>
+      <div className="flex flex-col items-center px-4 py-12 sm:px-6 lg:px-8">
+        {/* Card Principal */}
+        <div className="w-full max-w-5xl bg-white shadow-lg rounded-xl flex overflow-hidden border border-gray-300 hover:shadow-2xl transition-shadow duration-300">
+          {/* Imagem com bordas arredondadas */}
+          <div
+            className="w-1/3 bg-cover bg-center rounded-l-xl"
+            style={{ backgroundImage: `url(${hub.imagePath})` }}
+          ></div>
+          <div className="w-2/3 p-8 flex flex-col justify-center space-y-4">
+            <h1 className="text-3xl font-bold text-[#FF3700]">{hub.name}</h1>
+            <div className="flex items-center text-gray-700 space-x-4">
+              <span className="material-icons text-[#FF3700]">Localização</span>
+              <p>
+                {hub.location.street}, {hub.location.number}, {hub.location.city} - {hub.location.state}
+                <br />
+                CEP: {hub.location.cep}
+              </p>
+            </div>
+            <div className="flex items-center text-gray-700 space-x-4">
+              <span className="material-icons text-[#FF3700]">Detalhes</span>
+              <p>{hub.details || "Descrição do hub não disponível."}</p>
+            </div>
+          </div>
         </div>
-    </div>
-    <span>João Domingus</span>
-</div>
 
-</div>
-
-<div className="main">
-
-<div className="empty"></div>
-
-<div className="body-carousel">
-    <h3>Fast-food</h3>
-    <div className="owl-carousel" id="carousel1">
-        <div>
-            <a href="pagEstabelecimento.html"><img src="../../../imagens/iconBobs.png" alt="Bob's" /></a>
-            <span>Bob's</span>
+        {/* Lista de Restaurantes */}
+        <div className="w-full max-w-5xl bg-white shadow-lg rounded-xl p-8 mt-10 border border-gray-300">
+          <h2 className="text-2xl font-semibold text-[#FF3700] mb-6">Estabelecimentos</h2>
+          {vendors.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {vendors.map((vendor) => (
+                <div
+                  key={vendor.id}
+                  className="relative group border border-gray-200 rounded-lg p-4 shadow-md hover:shadow-xl transition-shadow duration-300"
+                >
+                  <img
+                    src="/imagens/restaurante.png"
+                    alt={vendor.name}
+                    className="w-full h-48 object-cover rounded-lg mb-4 group-hover:opacity-90 transition-opacity duration-300"
+                  />
+                  <h3 className="text-lg font-semibold text-gray-900 group-hover:text-[#FF3700] transition-colors duration-300">
+                    {vendor.name}
+                  </h3>
+                  <p className="text-sm text-gray-600">{vendor.description}</p>
+                  <Link href={`/client/hubs/${hubId}/vendors/${vendor.id}`}>
+                    <button className="absolute top-2 right-2 bg-[#FF3700] text-white font-semibold px-4 py-2 rounded-full shadow-md hover:bg-[#FF7A55] transition-colors duration-300">
+                      Ver detalhes
+                    </button>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-700">Nenhum estabelecimento encontrado para este hub.</p>
+          )}
         </div>
-        <div>
-            <a href="pagEstabelecimento.html"><img src="../../../imagens/iconMcDonalds.png" alt="McDonald's" /></a>
-            <span>McDonald's</span>
-        </div>
-        <div>
-            <a href="pagEstabelecimento.html"><img src="../../../imagens/iconPitsBurger.png" alt="Pit's Burger" /></a>
-            <span>Pit's Burger</span>
-        </div>
-        <div>
-            <a href="pagEstabelecimento.html"><img src="../../../imagens/iconGiraffas.png" alt="Giraffa's" /></a>
-            <span>Giraffa's</span>
-        </div>
-    </div>
-    <div className="custom-nav">
-        <button className="custom-prev" id="carousel1-prev">← </button>
-        <button className="custom-next" id="carousel1-next"> →</button>
-    </div>
-</div>
 
-<div className="body-carousel">
-    <h3>Comidas regionais brasileiras</h3>
-    <div className="owl-carousel" id="carousel2">
-        <div>
-            <a href="pagEstabelecimento.html"><img src="../../../imagens/iconBobs.png" alt="Bob's" /></a>
-            <span>Bob's</span>
-        </div>
-    </div>
-    <div className="custom-nav">
-        <button className="custom-prev" id="carousel2-prev">← </button>
-        <button className="custom-next" id="carousel2-next"> →</button>
-    </div>
-</div>
-</div>
-
-<div className="footer container">
-<div className="logo">
-    <img src="imagens/logoInferior.png" alt="" />
-</div>
-
-<div className="container">
-    <div>
-        <ul>
-            <li className="footer-header">Links:</li>
-            <li><img src="../../../imagens/logoInstagram.png" alt="" /><a href="https://www.instagram.com/"><span>Instagram</span></a></li>
-            <li><img src="../../../imagens/logoPinterest.png" alt="" /><a href="https://br.pinterest.com/"><span>Pinterest</span></a></li>
-        </ul>
-    </div>
-    <div>
-        <ul>
-            <li className="footer-header">Contatos:</li>
-            <li><img src="../../../imagens/pinLocation.png" alt="" /><span>3º piso do Instituto Metrópole Digital</span></li>
-            <li><img src="../../../imagens/pinPhone.png" alt="" /><span>(84) 9 8888-8888</span></li>
-            <li><img src="../../../imagens/pinEmail.png" alt="" /><span>hubsfood@gmail.com</span></li>
-            <li><img src="../../../imagens/pinHorario.png" alt="" /><span>24h</span></li>
-        </ul>
-    </div>
-</div>
-</div>
-
-<div className="end">
-<span>Copyright @ 2024 All rights reserved</span>
-</div>
-
+        <Link href={`/client/hubs`} passHref>
+          <button className="bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg hover:bg-gray-600 mt-8 transition-colors">
+            Voltar para os hubs
+          </button>
+        </Link>
       </div>
+
+      <Footer />
     </main>
   );
 }

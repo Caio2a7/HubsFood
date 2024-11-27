@@ -1,25 +1,27 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useState } from 'react';
 import { login } from '../../../services/auth/login'; // Caminho correto para o login.ts
 import Cookies from 'js-cookie'; // Importa o pacote js-cookie
 
 const Page = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [token, setToken] = useState<string | null>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(false);
+
+  const router = useRouter(); // Atualizado para o App Directory
 
   const handleLogin = async () => {
     const generatedToken = await login(email, password);
     if (generatedToken) {
-      setToken(generatedToken);
-      Cookies.set('token', generatedToken, { expires: 1 / 24 }); // expires: 1/24 = 1 hora
+      Cookies.set("token", generatedToken, { expires: 1 / 24 });
       setShowPopup(true);
-      setTimeout(() => setShowPopup(false), 5000); // Esconde o popup após 5 segundos
+      setTimeout(() => setShowPopup(false), 5000);
+      router.push("/client"); // Use router.push para redirecionar
     } else {
-      setError('Credenciais inválidas.');
+      setError("Credenciais inválidas.");
     }
   };
 

@@ -53,10 +53,10 @@ const Footer: React.FC = () => {
             <div className="flex flex-col mx-20">
               <span className="text-[#FF3700] font-bold text-lg mb-4">Parceiros</span>
               <ul className="space-y-4">
-                <li className="text-[#FF7A55] font-semibold text-base">Parceiro1</li>
-                <li className="text-[#FF7A55] font-semibold text-base">Parceiro2</li>
-                <li className="text-[#FF7A55] font-semibold text-base">Parceiro3</li>
-                <li className="text-[#FF7A55] font-semibold text-base">Parceiro4</li>
+                <li className="text-[#FF7A55] font-semibold text-base">Bobs</li>
+                <li className="text-[#FF7A55] font-semibold text-base">Giraffas</li>
+                <li className="text-[#FF7A55] font-semibold text-base">MacDonalds</li>
+                <li className="text-[#FF7A55] font-semibold text-base">Burguer King</li>
               </ul>
             </div>
             {/* Terceira seção de Links */}
