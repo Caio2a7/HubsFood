@@ -131,7 +131,7 @@ export default function VendorOrdersPage() {
                 <strong>Quantidade:</strong> {order.quantity}
               </p>
               <p>
-                <strong>Status:</strong> {order.status}
+                <strong>Status:</strong> {order.status === 'pending' ? 'pendente' : order.status === 'accepted' ? 'aceito' : 'pronto'}
               </p>
               <p>
                 <strong>Cliente:</strong> {order.clientId}
@@ -155,17 +155,14 @@ export default function VendorOrdersPage() {
                   className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={order.status}
                 >
-                  <option value="pending" disabled>
-                    Pending
-                  </option>
                   <option value="accepted" disabled={order.status !== "pending"}>
-                    Accepted
+                    Aceito
                   </option>
                   <option value="ready" disabled={order.status !== "accepted"}>
-                    Ready
+                    Pronto
                   </option>
                   <option value="rejected" disabled={order.status !== "pending"}>
-                    Rejected
+                    Rejeitado
                   </option>
                 </select>
               </div>

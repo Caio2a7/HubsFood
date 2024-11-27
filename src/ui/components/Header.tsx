@@ -214,6 +214,14 @@ const Header: React.FC = () => {
               </div>
             </>
           )}
+          
+          { !isLoggedIn && (
+            <Link href="/auth/login">
+            <button className="bg-[#FF3700] text-white font-bold px-4 py-2 rounded-lg hover:bg-[#FF7A55] transition">
+                Login
+            </button>
+          </Link>
+          )}
 
                       {/* Menu de Perfil */}
                       {isLoggedIn && role === "client" && (

@@ -1,13 +1,26 @@
+"use client"
 import Head from 'next/head';
-import '@/ui/assets/css/geral/style-header-footer.css';
 import '@/ui/assets/css/geral/style-body.css';
-import '@/ui/assets/css/componentes/style-carousel.css';
-import '@/ui/assets/css/geral/style-modal.css';
 import React from "react";
 import BigCarousel from "@/ui/components/BigCarousel";
 import Header from "@/ui/components/Header";
 import Footer from "@/ui/components/Footer";
+import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { getHubByName } from '@/services/hubs/hubGET';
+
 export default function HomePage() {
+  const getHub = async (hubName:string) => {
+    const hub = await getHubByName(hubName);
+    console.log(hub)
+    return hub
+  }
+  const router = useRouter();
+  const handleSearch = async (hubName:string) => {
+    const hub = await getHub(hubName)
+    console.log(hub)
+    router.push(`/hubs/${hub.id}`)
+  }
   const hubsCard = [
     { name: "Midway Mall", imagePath: "/imagens/icon_midway.png" },
     { name: "Natal Shopping", imagePath: "/imagens/icon_natalShopping.png" },
@@ -18,7 +31,7 @@ export default function HomePage() {
     { name: "Outro Hub", imagePath: "/imagens/icon_partage.png" },
     { name: "Mais Hubs", imagePath: "/imagens/icon_praiaShopping.png" },
   ];
-
+  const [search, setSearch] = useState("");
   return (
     <>
       <Head>
@@ -38,9 +51,11 @@ export default function HomePage() {
               <input
                 type="search"
                 placeholder="Buscar hub..."
+                value={search}
+                onChange={(e) => {setSearch(e.target.value)}}
                 className="px-4 py-2 border border-[#FF7A55] rounded-lg focus:outline-none focus:border-[#FF3700] w-full sm:w-64"
               />
-              <button className="bg-[#FF3700] text-white font-semibold px-6 py-2 rounded-lg hover:bg-[#FF7A55] transition mt-2 sm:mt-0">
+              <button onClick={() => { handleSearch(search)  }} className="bg-[#FF3700] text-white font-semibold px-6 py-2 rounded-lg hover:bg-[#FF7A55] transition mt-2 sm:mt-0">
                 Buscar
               </button>
             </div>
