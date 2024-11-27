@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
@@ -7,6 +6,11 @@ import { getOrdersByClient } from "@/services/orders/orderGET";
 import { getProductById } from "@/services/products/productGET";
 import { getClientIdFromCookie } from "@/ui/utils/getToken";
 import { getUserById } from "@/services/users/userGET";
+import jwt from "jsonwebtoken";
+const handleLogout = () => {
+  Cookies.remove("token");
+  window.location.href = "/auth/login";
+};
 
 const Header: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,50 +20,60 @@ const Header: React.FC = () => {
   const [orders, setOrders] = useState([]);
   const [parsedOrders, setParsedOrders] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState({ notifications: false, profile: false });
+  const [role, setRole] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const clientId = getClientIdFromCookie();
-      if (clientId) {
-        setIsLoggedIn(true);
+      const token = Cookies.get("token");
 
-        // Obter informações do usuário
-        try {
-          const user = await getUserById(clientId);
-          setUserName(user.username);
-          setUserImage(user.imagePath);
-        } catch (error) {
-          console.error("Erro ao buscar dados do usuário:", error);
+      if (token) {
+        const decoded = jwt.decode(token) as { id: string; role: string };
+        setRole(decoded?.role || null);
+        const clientId = decoded?.id;
+
+        if (clientId) {
+          setIsLoggedIn(true);
+
+          // Obter informações do usuário
+          try {
+            const user = await getUserById(clientId);
+            setUserName(user.username);
+            setUserImage(user.imagePath);
+          } catch (error) {
+            console.error("Erro ao buscar dados do usuário:", error);
+          }
+
+          // Obter quantidade de itens no carrinho (apenas para clientes)
+          if (decoded.role === "client") {
+            const cartData = Cookies.get("cart");
+            if (cartData) {
+              const cart = JSON.parse(cartData);
+              setCartCount(cart.length);
+            }
+
+            // Obter pedidos do cliente
+            try {
+              const userOrders = await getOrdersByClient(clientId);
+              setOrders(userOrders);
+
+              // Parse dos nomes dos produtos para os pedidos
+              const parsed = await Promise.all(
+                userOrders.map(async (order) => {
+                  const product = await getProductById(order.productId);
+                  return {
+                    ...order,
+                    productName: product[0]?.name || "Produto Desconhecido",
+                  };
+                })
+              );
+              setParsedOrders(parsed);
+            } catch (error) {
+              console.error("Erro ao buscar pedidos:", error);
+            }
+          }
+        } else {
+          setIsLoggedIn(false);
         }
-
-        // Obter quantidade de itens no carrinho
-        const cartData = Cookies.get("cart");
-        if (cartData) {
-          const cart = JSON.parse(cartData);
-          setCartCount(cart.length);
-        }
-
-        // Obter pedidos do cliente
-        try {
-          const userOrders = await getOrdersByClient(clientId);
-          setOrders(userOrders);
-
-          // Parse dos nomes dos produtos para os pedidos
-          const parsed = await Promise.all(
-            userOrders.map(async (order) => {
-              const product = await getProductById(order.productId);
-              return {
-                ...order,
-                productName: product[0]?.name || "Produto Desconhecido",
-              };
-            })
-          );
-          setParsedOrders(parsed);
-        } catch (error) {
-          console.error("Erro ao buscar pedidos:", error);
-        }
-      } else {
-        setIsLoggedIn(false);
       }
     };
 
@@ -90,7 +104,7 @@ const Header: React.FC = () => {
 
         {/* Navegação */}
         <nav>
-          {isLoggedIn ? (
+          {isLoggedIn && role === "client" ? (
             <ul className="flex items-center space-x-6">
               {"Início Hubs Carrinho Pedidos".split(" ").map((item, index) => (
                 <li
@@ -98,7 +112,23 @@ const Header: React.FC = () => {
                   key={index}
                 >
                   <Link
-                    href={`/client/${item === "Início" ? "" : item === "Sobre" ? "about" : item === "Contatos" ? "contact" : item.toLowerCase()}`}
+                    href={`/client/${item === "Início" ? "" : item.toLowerCase()}`}
+                    className="text-[#FF7A55] font-bold text-lg sm:text-xl"
+                  >
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : isLoggedIn && role === "vendor" ? (
+            <ul className="flex items-center space-x-6">
+              {"Início Pedidos Menu".split(" ").map((item, index) => (
+                <li
+                  className="hover:scale-105 transition-all transform duration-200 px-4 py-2 rounded-lg"
+                  key={index}
+                >
+                  <Link
+                    href={`/vendor/${item === "Início" ? "" : item.toLowerCase()}`}
                     className="text-[#FF7A55] font-bold text-lg sm:text-xl"
                   >
                     {item}
@@ -114,7 +144,7 @@ const Header: React.FC = () => {
                   key={index}
                 >
                   <Link
-                    href={`/${item === "Início" ? "" : item === "Sobre" ? "about" : item === "Contatos" ? "contact" : item.toLowerCase()}`}
+                    href={`/${item === "Início" ? "" : item.toLowerCase()}`}
                     className="text-[#FF7A55] font-bold text-lg sm:text-xl"
                   >
                     {item}
@@ -127,7 +157,7 @@ const Header: React.FC = () => {
 
         {/* User Section */}
         <div className="flex items-center space-x-6 pl-6 relative">
-          {isLoggedIn && (
+          {isLoggedIn && role === "client" && (
             <>
               {/* Notificações */}
               <div className="relative">
@@ -185,69 +215,112 @@ const Header: React.FC = () => {
             </>
           )}
 
-          {/* Menu de Perfil */}
-          {isLoggedIn ? (
-            <div className="relative">
-              <button
-                onClick={() => toggleDropdown("profile")}
-                className="flex items-center space-x-2"
-              >
-                <img
-                  src={userImage || "/imagens/photoUser.png"}
-                  alt="Foto de Perfil"
-                  className="h-10 w-10 rounded-full object-cover border-2 border-[#FF7A55] shadow-lg"
-                />
-                <span className="text-[#FF7A55] font-semibold">{userName}</span>
-                <svg
-                  className="w-4 h-4 text-[#FF7A55]"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+                      {/* Menu de Perfil */}
+                      {isLoggedIn && role === "client" && (
+              <div className="relative">
+                <button
+                  onClick={() => toggleDropdown("profile")}
+                  className="flex items-center space-x-2"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {dropdownOpen.profile && (
-                <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10">
-                  <Link
-                    href="/client/perfil"
-                    className="block py-2 px-4 text-[#FF7A55] hover:bg-[#FFDED5] transition"
+                  <img
+                    src={userImage || "/imagens/photoUser.png"}
+                    alt="Foto de Perfil"
+                    className="h-10 w-10 rounded-full object-cover border-2 border-[#FF7A55] shadow-lg"
+                  />
+                  <span className="text-[#FF7A55] font-semibold">{userName}</span>
+                  <svg
+                    className="w-4 h-4 text-[#FF7A55]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    Perfil
-                  </Link>
-                  <Link
-                    href="/orders"
-                    className="block py-2 px-4 text-[#FF7A55] hover:bg-[#FFDED5] transition"
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {dropdownOpen.profile && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10">
+                    <Link
+                      href="/client/perfil"
+                      className="block py-2 px-4 text-[#FF7A55] hover:bg-[#FFDED5] transition"
+                    >
+                      Perfil
+                    </Link>
+                    <Link
+                      href="/orders"
+                      className="block py-2 px-4 text-[#FF7A55] hover:bg-[#FFDED5] transition"
+                    >
+                      Meus Pedidos
+                    </Link>
+                    <Link
+                      href="/client/carrinho"
+                      className="block py-2 px-4 text-[#FF7A55] hover:bg-[#FFDED5] transition"
+                    >
+                      Carrinho
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="block py-2 px-4 text-[#FF7A55] hover:bg-[#FFDED5] transition w-full text-left"
+                    >
+                      Sair
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Menu de Perfil para Vendor */}
+            {isLoggedIn && role === "vendor" && (
+              <div className="relative">
+                <button
+                  onClick={() => toggleDropdown("profile")}
+                  className="flex items-center space-x-2"
+                >
+                  <img
+                    src={userImage || "/imagens/photoUser.png"}
+                    alt="Foto de Perfil"
+                    className="h-10 w-10 rounded-full object-cover border-2 border-[#FF7A55] shadow-lg"
+                  />
+                  <span className="text-[#FF7A55] font-semibold">{userName}</span>
+                  <svg
+                    className="w-4 h-4 text-[#FF7A55]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    Meus Pedidos
-                  </Link>
-                  <Link
-                    href="/client/carrinho"
-                    className="block py-2 px-4 text-[#FF7A55] hover:bg-[#FFDED5] transition"
-                  >
-                    Carrinho
-                  </Link>
-                  {/* <Link
-                    href="/settings"
-                    className="block py-2 px-4 text-[#FF7A55] hover:bg-[#FFDED5] transition"
-                  >
-                    Configurações
-                  </Link> */}
-                </div>
-              )}
-            </div>
-          ) : (
-            <Link href="/auth/login">
-              <button className="bg-[#FF3700] text-white font-bold px-4 py-2 rounded-lg hover:bg-[#FF7A55] transition">
-                Login
-              </button>
-            </Link>
-          )}
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {dropdownOpen.profile && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10">
+                    <Link
+                      href="/vendor/perfil"
+                      className="block py-2 px-4 text-[#FF7A55] hover:bg-[#FFDED5] transition"
+                    >
+                      Perfil
+                    </Link>
+                    <Link
+                      href="/vendor/pedidos"
+                      className="block py-2 px-4 text-[#FF7A55] hover:bg-[#FFDED5] transition"
+                    >
+                      Pedidos
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="block py-2 px-4 text-[#FF7A55] hover:bg-[#FFDED5] transition w-full text-left"
+                    >
+                      Sair
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
   );
 };
 
 export default Header;
+

@@ -1,290 +1,272 @@
-"use client"
+"use client";
+
 import { useState, useEffect } from "react";
 import { getProductsByVendor } from "@/services/products/productGET";
 import { createProduct } from "@/services/products/productPOST";
 import { updateProduct } from "@/services/products/productPUT";
 import { deleteProduct } from "@/services/products/productDELETE";
-import { getClientIdFromCookie } from "@/ui/utils/getToken";
-import Link from "next/link";
-import Script from 'next/script';
-import Head from 'next/head';
-import '@/ui/assets/css/geral/style-header-footer.css';
-import '@/ui/assets/css/geral/style-body.css';
-import '@/ui/assets/css/paginas/styleperfilEstabelecimento.css';
-import '@/ui/assets/css/componentes/style-carousel.css';
-
+import Header from "@/ui/components/Header";
+import Footer from "@/ui/components/Footer";
 
 export default function VendorMenuPage() {
   const [clientId, setClientId] = useState<number | null>(null);
   const [products, setProducts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [pendingChanges, setPendingChanges] = useState<any[]>([]); // Para salvar alterações
+  const [modalOpen, setModalOpen] = useState(false);
 
   const [newProduct, setNewProduct] = useState({
     name: "",
     description: "",
     price: 0,
-    category: "",
+    quantity: 0,
     available: true,
   });
 
-  const [productToEdit, setProductToEdit] = useState<any | null>(null);
-
   useEffect(() => {
-    // Pega o id do cliente a partir do cookie
-    try {
-      const id = getClientIdFromCookie();
-      setClientId(Number(id));
-    } catch (err) {
-      setError("Erro ao buscar ID do cliente.");
-      setLoading(false);
-      return;
-    }
+    setClientId(1); // Mock do vendorId. Substitua pela lógica real.
   }, []);
 
   useEffect(() => {
-    if (clientId === null) return;
+    if (!clientId) return;
+
     const fetchProducts = async () => {
       try {
         const allProducts = await getProductsByVendor(clientId);
+        console.log("Produtos carregados:", allProducts); // Log para verificar
         setProducts(allProducts);
-      } catch (err) {
-        setError("Erro ao buscar os produtos.");
-      } finally {
-        setLoading(false);
+        setFilteredProducts(allProducts);
+      } catch (error) {
+        console.error("Erro ao buscar os produtos:", error);
       }
     };
 
     fetchProducts();
   }, [clientId]);
 
-  const handleAddProduct = async () => {
-    try {
-      const createdProduct = await createProduct(
-        newProduct.name,
-        newProduct.description,
-        newProduct.price,
-        clientId!,
-        newProduct.category,
-        newProduct.available
-      );
-      setProducts([...products, createdProduct]); // Adiciona o produto criado na lista
-      setNewProduct({ name: "", description: "", price: 0, category: "", available: true });
-    } catch (err) {
-      setError("Erro ao adicionar o produto.");
-    }
+  const handleAddProduct = () => {
+    const newProductData = { ...newProduct, id: Date.now(), temporary: true };
+    setProducts((prev) => [...prev, newProductData]);
+    setFilteredProducts((prev) => [...prev, newProductData]);
+    setPendingChanges((prev) => [
+      ...prev,
+      () =>
+        createProduct(
+          newProduct.name,
+          newProduct.description,
+          newProduct.price,
+          clientId!,
+          "Sem Categoria",
+          newProduct.available
+        ),
+    ]);
+    setNewProduct({ name: "", description: "", price: 0, quantity: 0, available: true });
+    setModalOpen(false);
   };
 
-  const handleUpdateProduct = async () => {
+  const handleFieldChange = (productId: number, field: string, value: any) => {
+    const updatedProducts = products.map((product) =>
+      product.id === productId ? { ...product, [field]: value } : product
+    );
+    setProducts(updatedProducts);
+    setFilteredProducts(updatedProducts);
+
+    const product = updatedProducts.find((p) => p.id === productId);
+
+    setPendingChanges((prev) => {
+      // Remove alterações duplicadas para o mesmo produto
+      const filtered = prev.filter((change: any) => change.productId !== productId);
+      return [
+        ...filtered,
+        () =>
+          updateProduct(
+            productId,
+            product.name,
+            product.description,
+            product.price,
+            "Sem Categoria",
+            product.available
+          ),
+      ];
+    });
+  };
+
+  const handleDeleteProduct = (productId: number) => {
+    console.log("Marcando produto para exclusão:", productId); // Log para debug
+    setProducts((prev) => prev.filter((product) => product.id !== productId));
+    setFilteredProducts((prev) => prev.filter((product) => product.id !== productId));
+    setPendingChanges((prev) => [...prev, () => deleteProduct(productId)]);
+  };
+
+  const handleSaveChanges = async () => {
+    console.log("Iniciando o salvamento das alterações...");
     try {
-      if (productToEdit) {
-        const updatedProduct = await updateProduct(
-          productToEdit.id,
-          productToEdit.name,
-          productToEdit.description,
-          productToEdit.price,
-          productToEdit.category,
-          productToEdit.available
-        );
-        setProducts(products.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))); // Atualiza o produto na lista
-        setProductToEdit(null); // Limpa o formulário de edição
+      for (const change of pendingChanges) {
+        await change(); // Executa cada alteração
       }
-    } catch (err) {
-      setError("Erro ao atualizar o produto.");
+      alert("Alterações salvas com sucesso!");
+      setPendingChanges([]); // Limpa as alterações pendentes
+    } catch (error) {
+      console.error("Erro ao salvar alterações:", error);
+      alert("Erro ao salvar as alterações.");
     }
   };
 
-  const handleDeleteProduct = async (productId: number) => {
-    try {
-      await deleteProduct(productId);
-      setProducts(products.filter((product) => product.id !== productId)); // Remove o produto da lista
-    } catch (err) {
-      setError("Erro ao excluir o produto.");
-    }
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    const lowerQuery = query.toLowerCase();
+    const results = products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(lowerQuery) || product.description.toLowerCase().includes(lowerQuery)
+    );
+    setFilteredProducts(results);
   };
-
-  if (loading) return <div>Carregando produtos...</div>;
-  if (error) return <div>{error}</div>;
 
   return (
-    <main>
-      <h1>Menu do Vendor</h1>
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Header />
+      <main className="flex-1 container mx-auto p-6">
+        <div className="bg-white p-4 rounded-lg shadow-lg mb-6">
+          <p className="text-gray-700">
+            <strong>Aviso:</strong> Alterações feitas nesta página afetam diretamente o menu exibido para os clientes.
+          </p>
+        </div>
 
-      <h2>Adicionar Novo Produto</h2>
-      <div>
-        <input
-          type="text"
-          placeholder="Nome do Produto"
-          value={newProduct.name}
-          onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Descrição"
-          value={newProduct.description}
-          onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
-        />
-        <input
-          type="number"
-          placeholder="Preço"
-          value={newProduct.price}
-          onChange={(e) => setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })}
-        />
-        <input
-          type="text"
-          placeholder="Categoria"
-          value={newProduct.category}
-          onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
-        />
-        <input
-          type="checkbox"
-          checked={newProduct.available}
-          onChange={() => setNewProduct({ ...newProduct, available: !newProduct.available })}
-        />
-        <label>Disponível</label>
-        <button onClick={handleAddProduct}>Adicionar Produto</button>
-      </div>
+        <div className="flex justify-between items-center mb-6">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)}
+            placeholder="Pesquisar produtos..."
+            className="w-full max-w-md p-3 border border-gray-300 rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-[#FF7A55]"
+          />
+          <button
+            onClick={() => setModalOpen(true)}
+            className="bg-[#FF7A55] text-white px-6 py-3 rounded-lg shadow hover:bg-[#ff9770] transition font-semibold"
+          >
+            Adicionar Produto
+          </button>
+        </div>
 
-      {productToEdit && (
-        <div>
-          <h2>Editar Produto</h2>
-          <input
-            type="text"
-            value={productToEdit.name}
-            onChange={(e) => setProductToEdit({ ...productToEdit, name: e.target.value })}
-          />
-          <input
-            type="text"
-            value={productToEdit.description}
-            onChange={(e) => setProductToEdit({ ...productToEdit, description: e.target.value })}
-          />
-          <input
-            type="number"
-            value={productToEdit.price}
-            onChange={(e) => setProductToEdit({ ...productToEdit, price: parseFloat(e.target.value) })}
-          />
-          <input
-            type="text"
-            value={productToEdit.category}
-            onChange={(e) => setProductToEdit({ ...productToEdit, category: e.target.value })}
-          />
-          <input
-            type="checkbox"
-            checked={productToEdit.available}
-            onChange={() => setProductToEdit({ ...productToEdit, available: !productToEdit.available })}
-          />
-          <label>Disponível</label>
-          <button onClick={handleUpdateProduct}>Atualizar Produto</button>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredProducts.map((product) => (
+            <div key={product.id} className="bg-white p-4 rounded-lg shadow-lg">
+              <img
+                src={product.imagePath || "/imagens/restaurante.png"}
+                alt={product.name}
+                className="h-40 w-full object-cover rounded-md mb-4"
+              />
+              <label className="block text-gray-700 font-semibold mb-1">Nome</label>
+              <input
+                type="text"
+                value={product.name}
+                onChange={(e) => handleFieldChange(product.id, "name", e.target.value)}
+                className="w-full mb-2 p-2 border rounded-lg focus:outline-none"
+              />
+              <label className="block text-gray-700 font-semibold mb-1">Descrição</label>
+              <textarea
+                value={product.description}
+                onChange={(e) => handleFieldChange(product.id, "description", e.target.value)}
+                className="w-full mb-2 p-2 border rounded-lg focus:outline-none"
+              ></textarea>
+              <label className="block text-gray-700 font-semibold mb-1">Preço</label>
+              <input
+                type="number"
+                value={product.price}
+                onChange={(e) => handleFieldChange(product.id, "price", parseFloat(e.target.value))}
+                className="w-full mb-2 p-2 border rounded-lg focus:outline-none"
+              />
+              <label className="block text-gray-700 font-semibold mb-1">Quantidade</label>
+              <input
+                type="number"
+                value={product.quantity || 0}
+                onChange={(e) => handleFieldChange(product.id, "quantity", parseInt(e.target.value))}
+                className="w-full mb-2 p-2 border rounded-lg focus:outline-none"
+              />
+              <div className="flex justify-between items-center mt-4">
+                <button
+                  onClick={() => handleDeleteProduct(product.id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600 transition"
+                >
+                  Deletar
+                </button>
+                <button
+                  onClick={() => handleFieldChange(product.id, "available", !product.available)}
+                  className={`px-4 py-2 rounded-lg font-semibold ${
+                    product.available ? "bg-green-500 text-white" : "bg-gray-500 text-white"
+                  }`}
+                >
+                  {product.available ? "Disponível" : "Indisponível"}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 flex justify-end">
+          <button
+            onClick={handleSaveChanges}
+            className="bg-[#FF7A55] text-white px-8 py-3 rounded-lg font-bold shadow-lg hover:bg-[#ff9770] transition"
+          >
+            Salvar Alterações
+          </button>
+        </div>
+      </main>
+      <Footer />
+
+      {modalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-xl font-bold mb-4">Adicionar Novo Produto</h2>
+            <label className="block text-gray-700 font-semibold mb-1">Nome do Produto</label>
+            <input
+              type="text"
+              placeholder="Nome do Produto"
+              value={newProduct.name}
+              onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+              className="w-full mb-2 p-3 border rounded-lg"
+            />
+            <label className="block text-gray-700 font-semibold mb-1">Descrição</label>
+            <textarea
+              placeholder="Descrição"
+              value={newProduct.description}
+              onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+              className="w-full mb-2 p-3 border rounded-lg"
+            ></textarea>
+            <label className="block text-gray-700 font-semibold mb-1">Preço</label>
+            <input
+              type="number"
+              placeholder="Preço"
+              value={newProduct.price}
+              onChange={(e) => setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })}
+              className="w-full mb-2 p-3 border rounded-lg"
+            />
+            <label className="block text-gray-700 font-semibold mb-1">Quantidade</label>
+            <input
+              type="number"
+              placeholder="Quantidade"
+              value={newProduct.quantity}
+              onChange={(e) => setNewProduct({ ...newProduct, quantity: parseInt(e.target.value) })}
+              className="w-full mb-4 p-3 border rounded-lg"
+            />
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={() => setModalOpen(false)}
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-semibold hover:bg-gray-400 transition"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleAddProduct}
+                className="bg-[#FF7A55] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#ff9770] transition"
+              >
+                Adicionar
+              </button>
+            </div>
+          </div>
         </div>
       )}
-
-      <h2>Produtos</h2>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            <p><strong>{product.name}</strong></p>
-            <p>{product.description}</p>
-            <p>Preço: {product.price}</p>
-            <p>Disponibilidade: {product.available ? 'Disponível' : 'Indisponível'}</p>
-            <button onClick={() => setProductToEdit(product)}>Editar</button>
-            <button onClick={() => handleDeleteProduct(product.id)}>Deletar</button>
-          </li>
-        ))}
-      </ul>
-      <div>
-      <div className="header container">
-    <div className="container">
-        <div>
-            <img src="/imagens/logoMenuSuperior.png" alt="" />
-        </div>
     </div>
-
-    <div className="user">
-        <div className="menu-container">
-            <img src="/imagens/userEstabelecimento.png" alt="Foto de Perfil" className="menu-trigger" />
-            <div className="menu" id="menu">
-                <a href="perfilEstabelecimento.html">Perfil</a>
-                <a href="registrocardapioEstabelecimento.html">Cardápio</a>
-                <a href="#item3">Pedidos</a>
-                <a href="../../templates/areaNaoLogada/index.html">Sair</a>
-            </div>
-        </div>
-        <span>Bob's</span>
-    </div>
-</div>
-
-<main>
-    <div className="escolhaFundo">
-        <div className="containerEstabelecimento">
-            <div><img src="/imagens/userEstabelecimento.png" alt="Foto de Perfil" /></div>
-        </div>
-    </div>
-
-    <div className="produtos">
-        <div className="tituloGrupoAlimentar">
-            <h3>Combo </h3> 
-            <img src="/imagens/pinEditar.png" alt="" />
-        </div>
-        <div className="body-carousel">
-            <h3>Hubs Cadastrados</h3>
-            <div className="owl-carousel" id="carousel1">
-                <div>
-                    <img src="/imagens/icon_midway.png" alt="Midway Mall Icon" />
-                    <span>Midway Mall</span>
-                </div>
-
-                <div>
-                    <img src="/imagens/icon_natalShopping.png" alt="Natal Shopping Icon" />
-                    <span>Natal Shopping</span>
-                </div>
-
-                <div>
-                    <img src="/imagens/icon_partage.png" alt="Partage Shopping Icon" />
-                    <span>Partage Norte Shopping</span>
-                </div>
-                <div>
-                    <img src="/imagens/icon_praiaShopping.png" alt="Praia Shopping Icon" />
-                    <span>Praia Shopping</span>
-                </div>
-            </div>
-            <div className="custom-nav">
-                <button className="custom-prev" id="carousel1-prev">← </button>
-                <button className="custom-next" id="carousel1-next"> →</button>
-            </div>
-        </div>
-    </div>
-</main>
-
-<div className="footer container">
-    <div className="logo">
-        <img src="/imagens/logoInferior.png" alt="Logo Inferior" />
-    </div>
-
-    <div className="container">
-        <div>
-            <ul>
-                <li className="footer-header">Links:</li>
-                <li><img src="/imagens/logoInstagram.png" alt="Instagram" /><a href="https://www.instagram.com/"><span>Instagram</span></a></li>
-                <li><img src="/imagens/logoPinterest.png" alt="Pinterest" /><a href="https://br.pinterest.com/"><span>Pinterest</span></a></li>
-            </ul>
-        </div>
-        <div>
-            <ul>
-                <li className="footer-header">Contatos:</li>
-                <li><img src="/imagens/pinLocation.png" alt="Pin" /><span>3º piso do Instituto Metrópole Digital</span></li>
-                <li><img src="/imagens/pinPhone.png" alt="Phone" /><span>(84) 9 8888-8888</span></li>
-                <li><img src="/imagens/pinEmail.png" alt="Email" /><span>hubsfood@gmail.com</span></li>
-                <li><img src="/imagens/pinHorario.png" alt="Horário" /><span>24h</span></li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<div className="end">
-    <span>Copyright @ 2024 All rights reserved</span>
-</div>
-
-      </div>
-    </main>
   );
 }

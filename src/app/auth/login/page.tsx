@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from 'react';
 import { login } from '../../../services/auth/login'; // Caminho correto para o login.ts
 import Cookies from 'js-cookie'; // Importa o pacote js-cookie
+import jwt from 'jsonwebtoken'; // Para decodificar o token
 
 const Page = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +20,20 @@ const Page = () => {
       Cookies.set("token", generatedToken, { expires: 1 / 24 });
       setShowPopup(true);
       setTimeout(() => setShowPopup(false), 5000);
-      router.push("/client"); // Use router.push para redirecionar
+
+      // Decodificar o token para obter a role
+      const decodedToken = jwt.decode(generatedToken) as { role: string };
+      if (decodedToken?.role) {
+        if (decodedToken.role === "client") {
+          router.push("/client");
+        } else if (decodedToken.role === "vendor") {
+          router.push("/vendor");
+        } else {
+          setError("Role não reconhecida.");
+        }
+      } else {
+        setError("Token inválido.");
+      }
     } else {
       setError("Credenciais inválidas.");
     }

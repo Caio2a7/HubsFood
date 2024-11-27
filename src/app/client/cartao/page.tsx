@@ -5,12 +5,16 @@ import Cookies from "js-cookie";
 import { postOrder } from "@/services/orders/orderPOST";
 import Header from "@/ui/components/Header";
 import Footer from "@/ui/components/Footer";
+import { useRouter } from "next/navigation";
 
 export default function CardPage() {
   const [cart, setCart] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     const cartData = Cookies.get("cart");
@@ -22,17 +26,28 @@ export default function CardPage() {
   }, []);
 
   const handlePayment = async () => {
+    setIsProcessing(true);
+
     try {
       const clientId = 1; // Substitua pelo ID real do cliente
       for (const item of cart) {
         await postOrder(clientId, item.id);
       }
       setSuccessMessage("Pagamento realizado com sucesso!");
+
+      // Remove os itens do carrinho
       setCart([]);
-      Cookies.remove("cart"); // Limpa o carrinho após o pagamento
+      Cookies.remove("cart");
+
+      // Aguarda 3 segundos e redireciona
+      setTimeout(() => {
+        router.push("/client/pedidos");
+      }, 3000);
     } catch (error) {
       console.error("Erro ao processar o pagamento:", error);
       alert("Erro ao processar o pagamento. Tente novamente.");
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -50,6 +65,9 @@ export default function CardPage() {
           {successMessage ? (
             <div className="bg-green-100 text-green-800 p-4 rounded-lg mb-6">
               {successMessage}
+              <p className="text-gray-600 text-sm mt-2">
+                Você será redirecionado para seus pedidos em instantes...
+              </p>
             </div>
           ) : (
             <>
@@ -110,14 +128,14 @@ export default function CardPage() {
               {/* Botão de Pagamento */}
               <button
                 onClick={handlePayment}
-                disabled={!selectedCard}
+                disabled={!selectedCard || isProcessing}
                 className={`${
                   selectedCard
                     ? "bg-[#FF7A55] hover:bg-[#ff4f4f]"
                     : "bg-gray-400 cursor-not-allowed"
                 } text-white font-semibold px-6 py-3 rounded-lg transition w-full`}
               >
-                Pagar
+                {isProcessing ? "Processando..." : "Pagar"}
               </button>
             </>
           )}
