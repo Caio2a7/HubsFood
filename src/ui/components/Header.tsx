@@ -103,7 +103,7 @@ const Header: React.FC = () => {
         </div>
 
         {/* Navegação */}
-        <nav>
+        <nav className="hidden md:flex">
           {isLoggedIn && role === "client" ? (
             <ul className="flex items-center space-x-6">
               {"Início Hubs Carrinho Pedidos".split(" ").map((item, index) => (
