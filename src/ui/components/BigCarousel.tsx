@@ -12,56 +12,32 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({ hubs }) => {
   return (
-    <div style={{ padding: "10px", backgroundColor: "transparent" }}>
-      <h3 style={{ textAlign: "center", color: "#FF4500", fontSize: "20px" }}>Hubs Cadastrados</h3>
+    <div className="w-full max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-6 my-12">
+      <h3 className="text-center text-orange-500 font-bold text-2xl mb-6">Hubs Cadastrados</h3>
       <Swiper
-        spaceBetween={10} // Espaçamento ajustado entre os itens
+        spaceBetween={20} // Espaçamento entre os slides
         slidesPerView={4} // Mostra quatro hubs por slide
         autoplay={{
-          delay: 2000, // 2 segundos entre os slides
+          delay: 3000, // 3 segundos entre os slides
           disableOnInteraction: false,
         }}
         loop={true} // Repetição infinita
         navigation // Botões de navegação (prev/next)
         modules={[Navigation, Autoplay]}
-        style={{
-          width: "60%", // Largura do slider alinhada com o conteúdo
-          margin: "auto",
-          paddingTop: '20px', // Centralizado na página
-          background: "transparent", // Fundo transparente
-        }}
+        className="h-full"
       >
         {hubs.map((hub, index) => (
-          <SwiperSlide key={index}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column", // Alinha a imagem e o texto verticalmente
-                alignItems: "center", // Centraliza os itens
-                justifyContent: "center", // Centraliza verticalmente
-                backgroundColor: "transparent", // Fundo transparente
-              }}
-            >
+          <SwiperSlide key={index} className="flex justify-center items-center py-4 px-2">
+            <div className="flex flex-col items-center justify-center bg-transparent p-2 rounded-lg shadow-md">
               <img
                 src={hub.imagePath}
                 alt={hub.name}
+                className="w-40 h-42 object-cover py-5"
                 style={{
-                  width: "150px", // Largura da imagem ajustada
-                  height: "150px", // Altura proporcional
-                  objectFit: "contain", // Garante que a imagem não distorça
+                  imageRendering: "auto", // Garante maior nitidez
                 }}
               />
-              <p
-                style={{
-                  marginTop: "10px", // Espaço entre imagem e texto
-                  color: "#000", // Cor do texto
-                  fontWeight: "normal",
-                  fontSize: "12px", // Tamanho ajustado do texto
-                  textAlign: "center", // Centraliza o texto
-                }}
-              >
-                {hub.name}
-              </p>
+              <p className="text-center text-black font-semibold text-base">{hub.name}</p>
             </div>
           </SwiperSlide>
         ))}

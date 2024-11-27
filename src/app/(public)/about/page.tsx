@@ -36,7 +36,7 @@ const Sobre = () => {
 
         <div className="body-about">
           <div>
-            <img src="/imagens/sobreNosDescricao.png" alt="3 imagens de restaurantes" />
+            <img src="/imagens/sobreNosDescricao.png" style={{width: '200%', height: '200%'}} alt="3 imagens de restaurantes" />
           </div>
           <div>
             <h4>Nosso objetivo...</h4>
@@ -79,17 +79,20 @@ const Sobre = () => {
           </div>
         </div>
 
+          <div className="flex justify-center">
+            <h1 className="text-3xl font-bold text-orange-600">Nosso Time</h1>
+          </div>
         <div className="nossoTime">
           <div>
-            <img src="/imagens/time.png" alt="Ana Paula" />
+            <img src="/ana.jpeg" alt="Ana Paula" />
             <div className="legend"><span>Ana Paula</span></div>
           </div>
           <div>
-            <img src="/imagens/time.png" alt="Caio" />
+            <img src="/caio.jpeg" alt="Caio" />
             <div className="legend"><span>Caio</span></div>
           </div>
           <div>
-            <img src="/imagens/time.png" alt="Camila" />
+            <img src="/camila.png" alt="Camila" />
             <div className="legend"><span>Camila</span></div>
           </div>
         </div>

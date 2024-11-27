@@ -7,16 +7,6 @@
     list-style: none;
 }
 
-/*!!!! ESTILOS DE RESPONSIVIDADE !!!!*/
-.footer, .end, .header, .main{
-    width: 98.79vw !important;
-}
-/*!!!! ESTILOS DE RESPONSIVIDADE !!!!*/
-body {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0px 10px;
-}
 
 .header, .footer {
     background-color: #FFDED5;
@@ -163,7 +153,7 @@ input[type="search"]:focus {
     background-color: #e0e0e0;
 }
 
-button {
+button, .button {
     background-color: #f05033;
     color: white;
     border: none;
@@ -175,7 +165,7 @@ button {
     font-weight: 600;
 }
 
-button:hover {
+button:hover, .button:hover {
     background-color:white ;
     color:#d43f2a ;
 }

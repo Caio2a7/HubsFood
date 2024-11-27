@@ -5,64 +5,46 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import Link from "next/link";
 
 interface CarouselProps {
-  hubs: { name: string; imagePath: string }[]; // Array de hubs com nome e caminho da imagem
+  hubs: { id: string; name: string; imagePath: string }[]; // Inclui o ID do hub
 }
 
 const Carousel: React.FC<CarouselProps> = ({ hubs }) => {
   return (
-    <div style={{ padding: "10px", backgroundColor: "transparent" }}>
-      <h3 style={{ textAlign: "center", color: "#FF4500", fontSize: "20px" }}>Hubs Cadastrados</h3>
+    <div className="py-10 bg-transparent">
+      <h3 className="text-center text-orange-600 text-2xl mb-6">Hubs Cadastrados</h3>
       <Swiper
-        spaceBetween={10} // Espaçamento ajustado entre os itens
-        slidesPerView={4} // Mostra quatro hubs por slide
+        spaceBetween={10}
+        slidesPerView={4}
         autoplay={{
-          delay: 2000, // 2 segundos entre os slides
+          delay: 2000,
           disableOnInteraction: false,
         }}
-        loop={true} // Repetição infinita
-        navigation // Botões de navegação (prev/next)
+        loop={true}
+        navigation
         modules={[Navigation, Autoplay]}
+        className="mx-auto"
         style={{
-          width: "37%", // Largura do slider alinhada com o conteúdo
-          margin: "auto",
-          paddingTop: '30px', // Centralizado na página
-          background: "transparent", // Fundo transparente
+          paddingTop: "30px",
+          background: "transparent",
         }}
       >
-        {hubs.map((hub, index) => (
-          <SwiperSlide key={index}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column", // Alinha a imagem e o texto verticalmente
-                alignItems: "center", // Centraliza os itens
-                justifyContent: "center", // Centraliza verticalmente
-                backgroundColor: "transparent", // Fundo transparente
-              }}
-            >
-              <img
-                src={hub.imagePath}
-                alt={hub.name}
-                style={{
-                  width: "100px", // Largura da imagem ajustada
-                  height: "100px", // Altura proporcional
-                  objectFit: "contain", // Garante que a imagem não distorça
-                }}
-              />
-              <p
-                style={{
-                  marginTop: "10px", // Espaço entre imagem e texto
-                  color: "#000", // Cor do texto
-                  fontWeight: "normal",
-                  fontSize: "12px", // Tamanho ajustado do texto
-                  textAlign: "center", // Centraliza o texto
-                }}
-              >
-                {hub.name}
-              </p>
-            </div>
+        {hubs.map((hub) => (
+          <SwiperSlide key={hub.id}>
+            <Link href={`/hubs/${hub.id}`} className="block">
+              <div className="flex flex-col items-center justify-center bg-transparent">
+                <img
+                  src={hub.imagePath}
+                  alt={hub.name}
+                  className="w-32 h-32 object-contain"
+                />
+                <p className="mt-3 text-center text-gray-800 font-semibold text-sm">
+                  {hub.name}
+                </p>
+              </div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
