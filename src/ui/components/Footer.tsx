@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
               </ul>
             </div>
             {/* Segunda seção de Links */}
-            <div className="flex flex-col mx-20">
+            {/* <div className="flex flex-col mx-20">
               <span className="text-[#FF3700] font-bold text-lg mb-4">Parceiros</span>
               <ul className="space-y-4">
                 <li className="text-[#FF7A55] font-semibold text-base">Bobs</li>
@@ -58,7 +58,7 @@ const Footer: React.FC = () => {
                 <li className="text-[#FF7A55] font-semibold text-base">MacDonalds</li>
                 <li className="text-[#FF7A55] font-semibold text-base">Burguer King</li>
               </ul>
-            </div>
+            </div> */}
             {/* Terceira seção de Links */}
            
             {/* Contatos */}

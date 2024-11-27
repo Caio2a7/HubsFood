@@ -2,7 +2,7 @@
   "users": [
     {
       "id": "1",
-      "username": "client1",
+      "username": "cliente",
       "password": "$2a$10$zY3v1W3xH9PTzIMNYd0KLOL.G28chANSzXbt/nq2KPcXUczFHSU4W",
       "role": "client",
       "email": "client1@example.com",
@@ -10,7 +10,7 @@
     },
     {
       "id": "2",
-      "username": "vendor1",
+      "username": "estabelecimento",
       "password": "$2a$10$b4epCtPs0zdVogzmqxK.X.SGboi7dzKA7qdHxie4hCdDaR56GaxRK",
       "role": "vendor",
       "email": "vendor1@example.com"
@@ -368,7 +368,7 @@
     },
     {
       "name": {
-        "id": "7c85",
+        "id": "12",
         "name": "Teste",
         "description": "1",
         "price": 1,
@@ -379,7 +379,7 @@
       "id": "7c85"
     },
     {
-      "id": "31af",
+      "id": "13",
       "name": "teste",
       "description": "1",
       "price": 1,

@@ -160,7 +160,7 @@ const Header: React.FC = () => {
           {isLoggedIn && role === "client" && (
             <>
               {/* Notificações */}
-              <div className="relative">
+              <div className="relative hidden sm:block" style={{width: '50px', height: '35px'}}>
                 <button
                   onClick={() => toggleDropdown("notifications")}
                   className="relative flex items-center"
@@ -198,7 +198,7 @@ const Header: React.FC = () => {
               </div>
 
               {/* Carrinho */}
-              <div className="relative">
+              <div className="relative relative hidden sm:block" style={{width: '50px', height: '35px'}}>
                 <Link href="/client/carrinho" className="relative flex items-center">
                   <img
                     src="/imagens/iconCarrinho.png"
