@@ -381,49 +381,56 @@
     {
       "id": "1",
       "clientId": 1,
+      "quantity": 10,
       "productId": 1,
       "status": "ready",
       "createdAt": "2024-11-24T00:00:00Z"
     },
     {
-      "id": "a465",
+      "id": "2",
       "clientId": 1,
       "productId": 1,
+      "quantity": 10,
       "status": "accepted",
       "createdAt": "2024-11-24T19:00:38.068Z"
     },
     {
-      "id": "2",
-      "clientId": 1,
+      "id": "3",
+      "clientId": 2,
       "productId": 3,
+      "quantity": 10,
       "status": "pending",
       "createdAt": "2024-11-24T19:01:35.006Z"
     },
     {
-      "id": "3",
-      "clientId": null,
+      "id": "4",
+      "clientId": 3,
       "productId": 1,
+      "quantity": 10,
       "status": "pending",
       "createdAt": "2024-11-24T19:18:15.089Z"
     },
     {
-      "id": "4",
-      "clientId": 1,
-      "productId": 3,
-      "status": "pending",
-      "createdAt": "2024-11-24T19:01:35.006Z"
-    },
-    {
       "id": "5",
       "clientId": 1,
-      "productId": "4",
+      "productId": 3,
+      "quantity": 10,
       "status": "pending",
-      "createdAt": "2024-11-27T12:21:25.609Z"
+      "createdAt": "2024-11-24T19:01:35.006Z"
     },
     {
       "id": "6",
       "clientId": 1,
       "productId": "4",
+      "quantity": 10,
+      "status": "pending",
+      "createdAt": "2024-11-27T12:21:25.609Z"
+    },
+    {
+      "id": "7",
+      "clientId": 1,
+      "productId": "4",
+      "quantity": 10,
       "status": "pending",
       "createdAt": "2024-11-27T12:23:12.891Z"
     }

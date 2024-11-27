@@ -4,41 +4,66 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { getOrdersByClient } from "@/services/orders/orderGET";
+import { getProductById } from "@/services/products/productGET";
 import { getClientIdFromCookie } from "@/ui/utils/getToken";
+import { getUserById } from "@/services/users/userGET";
 
 const Header: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
+  const [userImage, setUserImage] = useState<string | null>(null);
   const [cartCount, setCartCount] = useState(0);
   const [orders, setOrders] = useState([]);
+  const [parsedOrders, setParsedOrders] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState({ notifications: false, profile: false });
 
   useEffect(() => {
-    const clientId = getClientIdFromCookie();
-    if (clientId) {
-      setIsLoggedIn(true);
-      setUserName("João Domingus"); // Substitua pelo nome do usuário real
+    const fetchData = async () => {
+      const clientId = getClientIdFromCookie();
+      if (clientId) {
+        setIsLoggedIn(true);
 
-      // Obter quantidade de itens no carrinho
-      const cartData = Cookies.get("cart");
-      if (cartData) {
-        const cart = JSON.parse(cartData);
-        setCartCount(cart.length);
-      }
+        // Obter informações do usuário
+        try {
+          const user = await getUserById(clientId);
+          setUserName(user.username);
+          setUserImage(user.imagePath);
+        } catch (error) {
+          console.error("Erro ao buscar dados do usuário:", error);
+        }
 
-      // Obter pedidos do cliente
-      const fetchOrders = async () => {
+        // Obter quantidade de itens no carrinho
+        const cartData = Cookies.get("cart");
+        if (cartData) {
+          const cart = JSON.parse(cartData);
+          setCartCount(cart.length);
+        }
+
+        // Obter pedidos do cliente
         try {
           const userOrders = await getOrdersByClient(clientId);
           setOrders(userOrders);
+
+          // Parse dos nomes dos produtos para os pedidos
+          const parsed = await Promise.all(
+            userOrders.map(async (order) => {
+              const product = await getProductById(order.productId);
+              return {
+                ...order,
+                productName: product[0]?.name || "Produto Desconhecido",
+              };
+            })
+          );
+          setParsedOrders(parsed);
         } catch (error) {
           console.error("Erro ao buscar pedidos:", error);
         }
-      };
-      fetchOrders();
-    } else {
-      setIsLoggedIn(false);
-    }
+      } else {
+        setIsLoggedIn(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const toggleDropdown = (type: "notifications" | "profile") => {
@@ -67,7 +92,7 @@ const Header: React.FC = () => {
         <nav>
           {isLoggedIn ? (
             <ul className="flex items-center space-x-6">
-              {"Início Sobre Hubs Contatos Pedidos".split(" ").map((item, index) => (
+              {"Início Hubs Pedidos".split(" ").map((item, index) => (
                 <li
                   className="hover:scale-105 transition-all transform duration-200 px-4 py-2 rounded-lg"
                   key={index}
@@ -115,9 +140,9 @@ const Header: React.FC = () => {
                     alt="Notificações"
                     className="h-8 w-8 object-contain"
                   />
-                  {orders.length > 0 && (
+                  {parsedOrders.length > 0 && (
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold rounded-full h-5 w-5 flex items-center justify-center">
-                      {orders.length}
+                      {parsedOrders.length}
                     </span>
                   )}
                 </button>
@@ -125,15 +150,15 @@ const Header: React.FC = () => {
                   <div className="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg z-10">
                     <h3 className="text-lg font-semibold text-[#FF7A55] p-4">Notificações</h3>
                     <ul className="max-h-48 overflow-y-auto">
-                      {orders.length === 0 ? (
+                      {parsedOrders.length === 0 ? (
                         <li className="text-gray-600 text-sm px-4 py-2">Sem pedidos recentes</li>
                       ) : (
-                        orders.map((order) => (
+                        parsedOrders.map((order) => (
                           <li
                             key={order.id}
                             className="text-gray-700 px-4 py-2 hover:bg-[#FFDED5] transition"
                           >
-                            Pedido: {order.name} - {order.status}
+                            Pedido: {order.productName} - {order.status}
                           </li>
                         ))
                       )}
@@ -168,7 +193,7 @@ const Header: React.FC = () => {
                 className="flex items-center space-x-2"
               >
                 <img
-                  src="/imagens/photoUser.png"
+                  src={userImage || "/imagens/photoUser.png"}
                   alt="Foto de Perfil"
                   className="h-10 w-10 rounded-full object-cover border-2 border-[#FF7A55] shadow-lg"
                 />

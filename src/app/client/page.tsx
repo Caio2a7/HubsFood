@@ -1,8 +1,4 @@
 import Head from 'next/head';
-import '@/ui/assets/css/geral/style-header-footer.css';
-import '@/ui/assets/css/geral/style-body.css';
-import '@/ui/assets/css/componentes/style-carousel.css';
-import '@/ui/assets/css/geral/style-modal.css';
 import React from "react";
 import BigCarousel from "@/ui/components/BigCarousel";
 import Header from "@/ui/components/Header";
