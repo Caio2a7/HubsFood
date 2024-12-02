@@ -252,7 +252,7 @@ const Header: React.FC = () => {
                       Perfil
                     </Link>
                     <Link
-                      href="/orders"
+                      href="/client/pedidos"
                       className="block py-2 px-4 text-[#FF7A55] hover:bg-[#FFDED5] transition"
                     >
                       Meus Pedidos
