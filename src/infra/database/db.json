@@ -2,13 +2,13 @@
   "users": [
     {
       "id": "1",
-      "username": "Caio Daniel",
+      "username": "Caio  daniel",
       "password": "$2a$10$zY3v1W3xH9PTzIMNYd0KLOL.G28chANSzXbt/nq2KPcXUczFHSU4W",
       "role": "client",
       "email": "client@example.com",
       "imagePath": "/imagens/photoUser.png",
       "cardInfo": {
-        "nameOnCard": "CTE",
+        "nameOnCard": "master",
         "cardNumber": "321312",
         "cvv": "123",
         "expirationDate": "12/12/2020"
@@ -166,9 +166,9 @@
   "vendors": [
     {
       "id": "1",
-      "name": "Pizza Place",
+      "name": "McDonald's",
       "description": "Best pizzas in town",
-      "imagePath": "/imagens/restaurante.png",
+      "imagePath": "/imagens/iconMcDonalds.png",
       "hubId": 1,
       "products": [
         1,
@@ -181,9 +181,9 @@
     },
     {
       "id": "2",
-      "name": "Sushi World",
+      "name": "Giraffas",
       "description": "Fresh sushi rolls",
-      "imagePath": "/imagens/restaurante.png",
+      "imagePath": "/imagens/iconGiraffas.png",
       "hubId": 1,
       "products": [
         1,
@@ -222,7 +222,7 @@
       "id": "5",
       "name": "Giraffas",
       "description": "Delicious Brazilian fast food",
-      "imagePath": "/imagens/restaurante.png",
+      "imagePath": "/imagens/iconGiraffas.png",
       "hubId": 2,
       "products": [
         1,
@@ -233,9 +233,9 @@
     },
     {
       "id": "6",
-      "name": "Pittsburgh",
+      "name": "Pitts Burguer",
       "description": "Famous for its hearty meals",
-      "imagePath": "/imagens/restaurante.png",
+      "imagePath": "/imagens/iconPitsBurger.png",
       "hubId": 2,
       "products": [
         1,
@@ -261,7 +261,7 @@
       "id": "8",
       "name": "Burger King",
       "description": "Grilled perfection",
-      "imagePath": "/imagens/restaurante.png",
+      "imagePath": "/imagens/iconGiraffas.png",
       "hubId": 3,
       "products": [
         1,
@@ -287,7 +287,7 @@
       "id": "10",
       "name": "Starbucks",
       "description": "Specialty coffee and more",
-      "imagePath": "/imagens/restaurante.png",
+      "imagePath": "/imagens/iconMcDonalds.png",
       "hubId": 4,
       "products": [
         1,
@@ -300,9 +300,9 @@
     },
     {
       "id": "11",
-      "name": "KFC",
+      "name": "Mc Donald's",
       "description": "Famous for fried chicken",
-      "imagePath": "/imagens/restaurante.png",
+      "imagePath": "/imagens/iconMcDonalds.png",
       "hubId": 4,
       "products": [
         1,
@@ -313,9 +313,9 @@
     },
     {
       "id": "12",
-      "name": "Outback",
+      "name": "Mc Donald's",
       "description": "Steaks and hearty meals",
-      "imagePath": "/imagens/restaurante.png",
+      "imagePath": "/imagens/iconMcDonalds.png",
       "hubId": 4,
       "products": [
         1,
@@ -333,7 +333,7 @@
       "price": 9.99,
       "quantity": 10,
       "vendorId": 2,
-      "imagePath": "/imagens/restaurante.png"
+      "imagePath": "/imagens/comboFood.png"
     },
     {
       "id": "2",
@@ -342,7 +342,7 @@
       "price": 10.99,
       "quantity": 10,
       "vendorId": 3,
-      "imagePath": "/imagens/restaurante.png"
+      "imagePath": "/imagens/comboFood.png"
     },
     {
       "id": "3",
@@ -351,7 +351,7 @@
       "price": 12.99,
       "vendorId": 3,
       "quantity": 10,
-      "imagePath": "/imagens/restaurante.png"
+      "imagePath": "/imagens/comboFood.png"
     },
     {
       "id": "4",
@@ -360,7 +360,7 @@
       "price": 3.99,
       "vendorId": 4,
       "quantity": 10,
-      "imagePath": "/imagens/restaurante.png"
+      "imagePath": "/imagens/comboFood.png"
     },
     {
       "id": "5",
@@ -369,7 +369,7 @@
       "price": 4.99,
       "quantity": 10,
       "vendorId": 4,
-      "imagePath": "/imagens/restaurante.png"
+      "imagePath": "/imagens/comboFood.png"
     }
   ],
   "orders": [
@@ -412,6 +412,13 @@
       "quantity": 10,
       "status": "pending",
       "createdAt": "2024-11-24T19:01:35.006Z"
+    },
+    {
+      "id": 6,
+      "clientId": 1,
+      "productId": "1",
+      "status": "pending",
+      "createdAt": "2024-12-02T14:57:25.937Z"
     }
   ]
 }
