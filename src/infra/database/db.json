@@ -311,7 +311,7 @@
   ],
   "products": [
     {
-      "id": "4",
+      "id": "1",
       "name": "Spicy Tuna Roll",
       "description": "Fresh tuna with a kick",
       "price": 9.99,
@@ -320,7 +320,7 @@
       "imagePath": "/imagens/restaurante.png"
     },
     {
-      "id": "5",
+      "id": "2",
       "name": "Cheeseburger",
       "description": "Classic cheeseburger with cheddar",
       "price": 10.99,
@@ -329,7 +329,7 @@
       "imagePath": "/imagens/restaurante.png"
     },
     {
-      "id": "6",
+      "id": "3",
       "name": "Bacon Burger",
       "description": "Topped with crispy bacon",
       "price": 12.99,
@@ -338,7 +338,7 @@
       "imagePath": "/imagens/restaurante.png"
     },
     {
-      "id": "7",
+      "id": "4",
       "name": "Chicken Taco",
       "description": "Grilled chicken with fresh toppings",
       "price": 3.99,
@@ -347,45 +347,13 @@
       "imagePath": "/imagens/restaurante.png"
     },
     {
-      "id": "8",
+      "id": "5",
       "name": "Beef Taco",
       "description": "Seasoned beef with salsa",
       "price": 4.99,
       "quantity": 10,
       "vendorId": 4,
       "imagePath": "/imagens/restaurante.png"
-    },
-    {
-      "id": "227f",
-      "name": "Teste",
-      "description": "ASSSSSSSS",
-      "price": 12,
-      "vendorId": 2,
-      "imagePath": "/imagens/restaurante.png",
-      "category": "dd",
-      "quantity": 10,
-      "available": true
-    },
-    {
-      "name": {
-        "id": "12",
-        "name": "Teste",
-        "description": "1",
-        "price": 1,
-        "vendorId": 1,
-        "category": "Sem Categoria",
-        "available": false
-      },
-      "id": "7c85"
-    },
-    {
-      "id": "13",
-      "name": "teste",
-      "description": "1",
-      "price": 1,
-      "vendorId": 1,
-      "category": "Sem Categoria",
-      "available": true
     }
   ],
   "orders": [
@@ -394,7 +362,7 @@
       "clientId": 1,
       "quantity": 10,
       "productId": 1,
-      "status": "ready",
+      "status": "canceled",
       "createdAt": "2024-11-24T00:00:00Z"
     },
     {
@@ -402,7 +370,7 @@
       "clientId": 1,
       "productId": 1,
       "quantity": 10,
-      "status": "ready",
+      "status": "rejected",
       "createdAt": "2024-11-24T19:00:38.068Z"
     },
     {
@@ -415,10 +383,10 @@
     },
     {
       "id": "4",
-      "clientId": 3,
+      "clientId": 1,
       "productId": 1,
       "quantity": 10,
-      "status": "rejected",
+      "status": "pending",
       "createdAt": "2024-11-24T19:18:15.089Z"
     },
     {
@@ -428,53 +396,6 @@
       "quantity": 10,
       "status": "pending",
       "createdAt": "2024-11-24T19:01:35.006Z"
-    },
-    {
-      "id": "6",
-      "clientId": 1,
-      "productId": "4",
-      "quantity": 10,
-      "status": "rejected",
-      "createdAt": "2024-11-27T12:21:25.609Z"
-    },
-    {
-      "id": "7",
-      "clientId": 1,
-      "productId": "4",
-      "quantity": 10,
-      "status": "pending",
-      "createdAt": "2024-11-27T12:23:12.891Z"
-    },
-    {
-      "id": "8",
-      "clientId": 1,
-      "productId": "4",
-      "quantity": 10,
-      "status": "accepted",
-      "createdAt": "2024-11-27T13:24:20.077Z"
-    },
-    {
-      "id": "9",
-      "clientId": 1,
-      "productId": "4",
-      "quantity": 10,
-      "status": "pending",
-      "createdAt": "2024-11-27T13:25:51.530Z"
-    },
-    {
-      "id": "10",
-      "clientId": 1,
-      "productId": "5",
-      "quantity": 10,
-      "status": "rejected",
-      "createdAt": "2024-11-27T13:28:22.890Z"
-    },
-    {
-      "id": 11,
-      "clientId": 1,
-      "productId": "6",
-      "status": "pending",
-      "createdAt": "2024-11-27T16:21:03.550Z"
     }
   ]
 }

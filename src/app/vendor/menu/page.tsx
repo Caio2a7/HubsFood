@@ -8,15 +8,27 @@ import { deleteProduct } from "@/services/products/productDELETE";
 import Header from "@/ui/components/Header";
 import Footer from "@/ui/components/Footer";
 
+type Product = {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  quantity: number;
+  available: boolean;
+  imagePath?: string;
+  temporary?: boolean;
+};
+
 export default function VendorMenuPage() {
-  const [clientId, setClientId] = useState<number | null>(null);
-  const [products, setProducts] = useState<any[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [clientId, setClientId] = useState<number>(1); // Mock inicial
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [pendingChanges, setPendingChanges] = useState<any[]>([]); // Para salvar alterações
+  const [pendingChanges, setPendingChanges] = useState<(() => Promise<void>)[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const [newProduct, setNewProduct] = useState({
+  const [newProduct, setNewProduct] = useState<Product>({
+    id: 0,
     name: "",
     description: "",
     price: 0,
@@ -24,21 +36,16 @@ export default function VendorMenuPage() {
     available: true,
   });
 
+  // Fetch inicial dos produtos
   useEffect(() => {
-    setClientId(1); // Mock do vendorId. Substitua pela lógica real.
-  }, []);
-
-  useEffect(() => {
-    if (!clientId) return;
-
     const fetchProducts = async () => {
       try {
         const allProducts = await getProductsByVendor(clientId);
-        console.log("Produtos carregados:", allProducts); // Log para verificar
+        console.log("Produtos carregados:", allProducts);
         setProducts(allProducts);
         setFilteredProducts(allProducts);
       } catch (error) {
-        console.error("Erro ao buscar os produtos:", error);
+        console.error("Erro ao buscar produtos:", error);
       }
     };
 
@@ -51,21 +58,22 @@ export default function VendorMenuPage() {
     setFilteredProducts((prev) => [...prev, newProductData]);
     setPendingChanges((prev) => [
       ...prev,
-      () =>
-        createProduct(
+      async () => {
+        await createProduct(
           newProduct.name,
           newProduct.description,
           newProduct.price,
-          clientId!,
+          clientId,
           "Sem Categoria",
           newProduct.available
-        ),
+        );
+      },
     ]);
-    setNewProduct({ name: "", description: "", price: 0, quantity: 0, available: true });
+    setNewProduct({ id: 0, name: "", description: "", price: 0, quantity: 0, available: true });
     setModalOpen(false);
   };
 
-  const handleFieldChange = (productId: number, field: string, value: any) => {
+  const handleFieldChange = (productId: number, field: keyof Product, value: any) => {
     const updatedProducts = products.map((product) =>
       product.id === productId ? { ...product, [field]: value } : product
     );
@@ -75,38 +83,43 @@ export default function VendorMenuPage() {
     const product = updatedProducts.find((p) => p.id === productId);
 
     setPendingChanges((prev) => {
-      // Remove alterações duplicadas para o mesmo produto
-      const filtered = prev.filter((change: any) => change.productId !== productId);
+      const filtered = prev.filter((change) => change.name !== productId);
       return [
         ...filtered,
-        () =>
-          updateProduct(
-            productId,
-            product.name,
-            product.description,
-            product.price,
-            "Sem Categoria",
-            product.available
-          ),
+        async () => {
+          if (product) {
+            await updateProduct(
+              productId,
+              product.name,
+              product.description,
+              product.price,
+              "Sem Categoria",
+              product.available
+            );
+          }
+        },
       ];
     });
   };
 
   const handleDeleteProduct = (productId: number) => {
-    console.log("Marcando produto para exclusão:", productId); // Log para debug
     setProducts((prev) => prev.filter((product) => product.id !== productId));
     setFilteredProducts((prev) => prev.filter((product) => product.id !== productId));
-    setPendingChanges((prev) => [...prev, () => deleteProduct(productId)]);
+    setPendingChanges((prev) => [
+      ...prev,
+      async () => {
+        await deleteProduct(productId);
+      },
+    ]);
   };
 
   const handleSaveChanges = async () => {
-    console.log("Iniciando o salvamento das alterações...");
     try {
       for (const change of pendingChanges) {
-        await change(); // Executa cada alteração
+        await change();
       }
       alert("Alterações salvas com sucesso!");
-      setPendingChanges([]); // Limpa as alterações pendentes
+      setPendingChanges([]);
     } catch (error) {
       console.error("Erro ao salvar alterações:", error);
       alert("Erro ao salvar as alterações.");

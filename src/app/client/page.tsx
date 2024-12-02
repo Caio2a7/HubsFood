@@ -1,8 +1,12 @@
+"use client"
 import Head from 'next/head';
-import React from "react";
 import BigCarousel from "@/ui/components/BigCarousel";
 import Header from "@/ui/components/Header";
 import Footer from "@/ui/components/Footer";
+import { useRouter } from "next/navigation";
+import { getHubs } from "@/services/hubs/hubGET";
+import React, { useState, useEffect } from "react";
+
 export default function HomePage() {
   const hubsCard = [
     { name: "Midway Mall", imagePath: "/imagens/icon_midway.png" },
@@ -14,7 +18,43 @@ export default function HomePage() {
     { name: "Outro Hub", imagePath: "/imagens/icon_partage.png" },
     { name: "Mais Hubs", imagePath: "/imagens/icon_praiaShopping.png" },
   ];
+  const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [filteredHubs, setFilteredHubs] = useState([]);
+  const [hubs, setHubs] = useState([]);
+  const router = useRouter();
 
+  useEffect(() => {
+    const fetchHubs = async () => {
+      const hubsData = await getHubs();
+      setHubs(hubsData);
+    };
+    fetchHubs();
+  }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [search]);
+
+  useEffect(() => {
+    if (debouncedSearch.trim() === "") {
+      setFilteredHubs([]);
+      return;
+    }
+
+    const results = hubs.filter((hub) =>
+      hub.name.toLowerCase().includes(debouncedSearch.toLowerCase())
+    );
+    setFilteredHubs(results);
+  }, [debouncedSearch, hubs]);
+
+  const handleHubClick = (hub) => {
+    router.push(`/hubs/${hub.id}`);
+  };
   return (
     <>
       <Head>
@@ -25,22 +65,45 @@ export default function HomePage() {
         <Header />
         <main className="flex flex-col items-center px-4 py-12 sm:px-6 lg:px-8">
           {/* Seção de busca */}
-          <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6 mb-12 flex flex-col sm:flex-row items-center justify-between">
-            <div className="flex items-center gap-4">
-              <img src="/imagens/pinLocation.png" alt="Pin de localização" className="w-8 h-8" />
-              <span className="text-lg font-semibold text-[#FF3700]">Pesquise o seu hub aqui!</span>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-4 sm:mt-0">
-              <input
-                type="search"
-                placeholder="Buscar hub..."
-                className="px-4 py-2 border border-[#FF7A55] rounded-lg focus:outline-none focus:border-[#FF3700] w-full sm:w-64"
-              />
-              <button className="bg-[#FF3700] text-white font-semibold px-6 py-2 rounded-lg hover:bg-[#FF7A55] transition mt-2 sm:mt-0">
-                Buscar
-              </button>
-            </div>
+          <div className="relative w-full max-w-4xl bg-white shadow-lg rounded-lg ps-0 p-6 mb-12">
+          <div className="flex items-center gap-4 mb-4 ps-6">
+            <img
+              src="/imagens/pinLocation.png"
+              alt="Pin de localização"
+              className="w-8 h-8"
+            />
+            <span className="text-lg font-semibold text-[#FF3700]">
+              Pesquise o seu hub aqui!
+            </span>
           </div>
+          <div className="relative ps-6">
+            <input
+              type="search"
+              placeholder="Buscar hub..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="px-4 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-[#FF3700] focus:border-[#FF3700] w-full text-gray-700 placeholder-gray-400"
+            />
+            {/* <button
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#FF3700] text-white font-semibold px-4 py-2 rounded-full hover:bg-[#FF7A55] transition"
+            >
+              Buscar
+            </button> */}
+          </div>
+          {filteredHubs.length > 0 && (
+            <div className="absolute top-full mt-0 w-full bg-white border border-gray-300 shadow-xl rounded-lg max-h-60 overflow-y-auto z-50">
+              {filteredHubs.map((hub) => (
+                <div
+                  key={hub.id}
+                  onClick={() => handleHubClick(hub)}
+                  className="px-4 py-3 hover:bg-[#FF3700] hover:text-white cursor-pointer transition text-gray-700"
+                >
+                  {hub.name}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
           {/* Seção sobre nós */}
           <div className="flex flex-col sm:flex-row bg-white shadow-lg rounded-lg p-8 mb-12 w-full max-w-4xl">

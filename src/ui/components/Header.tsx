@@ -97,9 +97,6 @@ const Header: React.FC = () => {
             alt="Logo HubsFood"
             className="h-10 sm:h-12 object-contain transform transition-transform duration-200 hover:scale-110"
           />
-          <h1 className="text-xl font-bold text-[#FF7A55] transition-transform duration-200 hover:scale-105">
-            HubsFood
-          </h1>
         </div>
 
         {/* Navegação */}
