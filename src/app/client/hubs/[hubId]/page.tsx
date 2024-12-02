@@ -76,7 +76,7 @@ export default async function HubDetailsPage({ params }: { params: { hubId: stri
                   className="relative group border border-gray-200 rounded-lg p-4 shadow-md hover:shadow-xl transition-shadow duration-300"
                 >
                   <img
-                    src="/imagens/restaurante.png"
+                    src={vendor.imagePath}
                     alt={vendor.name}
                     className="w-full h-48 object-cover rounded-lg mb-4 group-hover:opacity-90 transition-opacity duration-300"
                   />

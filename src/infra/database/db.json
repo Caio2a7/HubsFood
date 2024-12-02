@@ -274,7 +274,7 @@
       "id": "9",
       "name": "Subway",
       "description": "Freshly made sandwiches",
-      "imagePath": "/imagens/restaurante.png",
+      "imagePath": "/imagens/subway.webp",
       "hubId": 3,
       "products": [
         1,
@@ -285,7 +285,7 @@
     },
     {
       "id": "10",
-      "name": "Starbucks",
+      "name": "Mc Donald's",
       "description": "Specialty coffee and more",
       "imagePath": "/imagens/iconMcDonalds.png",
       "hubId": 4,
@@ -370,6 +370,15 @@
       "quantity": 10,
       "vendorId": 4,
       "imagePath": "/imagens/comboFood.png"
+    },
+    {
+      "id": "a0f0",
+      "name": "Bauru",
+      "description": "salada",
+      "price": 5,
+      "vendorId": 1,
+      "category": "Sem Categoria",
+      "available": true
     }
   ],
   "orders": [
@@ -402,7 +411,7 @@
       "clientId": 1,
       "productId": 1,
       "quantity": 10,
-      "status": "pending",
+      "status": "canceled",
       "createdAt": "2024-11-24T19:18:15.089Z"
     },
     {

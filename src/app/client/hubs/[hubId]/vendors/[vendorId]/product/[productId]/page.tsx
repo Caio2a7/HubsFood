@@ -48,7 +48,7 @@ export default async function ProductPage({
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-lg bg-white shadow-lg rounded-lg overflow-hidden">
           <img
-            src={product.image || "/imagens/restaurante.png"}
+            src={product.imagePath || "/imagens/restaurante.png"}
             alt={product.name}
             className="w-full h-64 object-cover"
           />
