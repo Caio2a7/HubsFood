@@ -18,10 +18,11 @@ const Header: React.FC = () => {
   const [userImage, setUserImage] = useState<string | null>(null);
   const [cartCount, setCartCount] = useState(0);
   const [orders, setOrders] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
   const [parsedOrders, setParsedOrders] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState({ notifications: false, profile: false });
   const [role, setRole] = useState<string | null>(null);
-
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       const token = Cookies.get("token");
@@ -78,7 +79,21 @@ const Header: React.FC = () => {
     };
 
     fetchData();
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Considera "mobile" quando a largura é menor ou igual a 768px
+    };
+
+    handleResize(); // Chama ao carregar o componente
+    window.addEventListener("resize", handleResize); // Escuta mudanças no tamanho da janela
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prev) => !prev);
+  };
+
 
   const toggleDropdown = (type: "notifications" | "profile") => {
     setDropdownOpen((prev) => ({
@@ -88,7 +103,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="w-full bg-[#FFDED5] shadow-lg">
+    <div className="w-full bg-[#F4F4F4 ] shadow-lg">
       <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-2">
         {/* Logo */}
         <div className="flex items-center space-x-3">
@@ -154,7 +169,7 @@ const Header: React.FC = () => {
 
         {/* User Section */}
         <div className="flex items-center space-x-6 pl-6 relative">
-          {isLoggedIn && role === "client" && (
+          {!isMobile && isLoggedIn && role === "client" && (
             <>
               {/* Notificações */}
               <div className="relative hidden sm:block" style={{width: '50px', height: '35px'}}>
@@ -212,7 +227,7 @@ const Header: React.FC = () => {
             </>
           )}
           
-          { !isLoggedIn && (
+          { !isMobile && !isLoggedIn && (
             <Link href="/auth/login">
             <button className="bg-[#FF3700] text-white font-bold px-4 py-2 rounded-lg hover:bg-[#FF7A55] transition">
                 Login
@@ -220,8 +235,8 @@ const Header: React.FC = () => {
           </Link>
           )}
 
-                      {/* Menu de Perfil */}
-                      {isLoggedIn && role === "client" && (
+              {/* Menu de Perfil */}
+              {!isMobile && isLoggedIn && role === "client" && (
               <div className="relative">
                 <button
                   onClick={() => toggleDropdown("profile")}
@@ -275,7 +290,7 @@ const Header: React.FC = () => {
             )}
 
             {/* Menu de Perfil para Vendor */}
-            {isLoggedIn && role === "vendor" && (
+            {!isMobile && isLoggedIn && role === "vendor" && (
               <div className="relative">
                 <button
                   onClick={() => toggleDropdown("profile")}
@@ -322,7 +337,92 @@ const Header: React.FC = () => {
               </div>
             )}
           </div>
+        {isMobile && (
+          <button
+            onClick={toggleMobileMenu}
+            className="text-[#FF7A55] focus:outline-none"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-8 h-8"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          </button>
+        )}
         </div>
+
+        {/* Botão Mobile */}
+
+        {isMobileMenuOpen && (
+        <div className="bg-[#FFDED5] px-6 py-4 shadow-lg">
+          <nav className="flex flex-col space-y-4">
+            {isLoggedIn && role === "client" ? (
+              <>
+                {"Início Hubs Carrinho Pedidos".split(" ").map((item, index) => (
+                  <Link
+                    key={index}
+                    href={`/client/${item === "Início" ? "" : item.toLowerCase()}`}
+                    className="text-[#FF7A55] font-bold text-lg"
+                  >
+                    {item}
+                  </Link>
+                ))}
+                <button
+                  onClick={handleLogout}
+                  className="block font-bold text-[#FF7A55] hover:bg-[#FFDED5] transition w-full text-left"
+                >
+                  Sair
+                </button>
+              </>
+            ) : isLoggedIn && role === "vendor" ? (
+              <>
+                {"Início Pedidos Menu".split(" ").map((item, index) => (
+                  <Link
+                    key={index}
+                    href={`/vendor/${item === "Início" ? "" : item.toLowerCase()}`}
+                    className="text-[#FF7A55] font-bold text-lg"
+                  >
+                    {item}
+                  </Link>
+                ))}
+                <button
+                  onClick={handleLogout}
+                  className="block font-bold text-[#FF7A55] hover:bg-[#FFDED5] transition w-full text-left"
+                >
+                  Sair
+                </button>
+              </>
+            ) : (
+              <>
+                {"Início Sobre Hubs Contatos".split(" ").map((item, index) => (
+                  <Link
+                    key={index}
+                    href={`/${item === "Início" ? "" : item.toLowerCase()}`}
+                    className="text-[#FF7A55] font-bold text-lg"
+                  >
+                    {item}
+                  </Link>
+                ))}
+                <Link href="/auth/login">
+            <button className="bg-[#FF3700] text-white font-bold px-4 py-2 rounded-lg hover:bg-[#FF7A55] transition">
+                Login
+            </button>
+          </Link>
+              </>
+            )}
+          </nav>
+        </div>
+      )}
+
       </div>
   );
 };

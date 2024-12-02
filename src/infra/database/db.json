@@ -2,43 +2,59 @@
   "users": [
     {
       "id": "1",
-      "username": "cliente",
+      "username": "Caio Daniel",
       "password": "$2a$10$zY3v1W3xH9PTzIMNYd0KLOL.G28chANSzXbt/nq2KPcXUczFHSU4W",
       "role": "client",
-      "email": "client1@example.com",
-      "imagePath": "/imagens/photoUser.png"
+      "email": "client@example.com",
+      "imagePath": "/imagens/photoUser.png",
+      "cardInfo": {
+        "nameOnCard": "CTE",
+        "cardNumber": "321312",
+        "cvv": "123",
+        "expirationDate": "12/12/2020"
+      }
     },
     {
       "id": "2",
-      "username": "estabelecimento",
+      "username": "Esfirras Natal",
       "password": "$2a$10$b4epCtPs0zdVogzmqxK.X.SGboi7dzKA7qdHxie4hCdDaR56GaxRK",
       "role": "vendor",
-      "email": "vendor1@example.com"
+      "email": "vendor1@example.com",
+      "cardInfo": {
+        "nameOnCard": "Cartão Visa",
+        "cardNumber": "12313123",
+        "cvv": "122",
+        "expirationDate": "12/12/2024"
+      }
     },
     {
       "id": "3",
       "username": "admin",
       "password": "$2a$10$QS3NHNSLHE76HzmTwAOc3OHyepFIdoSNeENfPPGw44zO/NKTJelDq",
       "role": "admin",
-      "email": "admin@example.com"
-    },
-    {
-      "id": "4d40",
-      "email": "teste@gmail.com",
-      "password": "$2a$10$CoEVlUUAS.0pAGqzK.aQLeohuwDnswb.GbQ9N9cq.ru2xRPVr..se",
-      "role": "user"
+      "email": "admin@example.com",
+      "cardInfo": {}
     },
     {
       "id": "4",
       "email": "suportealmoxarifado@nei.ufrn.br",
       "password": "$2a$10$/p34lKGIQLI..JnrdUSvJ.3BkWFUuzWR5P0QoZCiAwHEaEC2EfmxO",
-      "role": "user"
+      "role": "user",
+      "cardInfo": {}
     },
     {
       "id": "5",
       "email": "teste@nei.ufrn.br",
       "password": "$2a$10$4zJJx/Kq9xuNASMnNPuFC.8Fp95Hzg5NchfXWi2t8fkgrk4Jh0.Z.",
-      "role": "vendor"
+      "role": "vendor",
+      "cardInfo": {}
+    },
+    {
+      "id": "6",
+      "email": "teste@gmail.com",
+      "password": "$2a$10$CoEVlUUAS.0pAGqzK.aQLeohuwDnswb.GbQ9N9cq.ru2xRPVr..se",
+      "role": "user",
+      "cardInfo": {}
     }
   ],
   "hubs": [
